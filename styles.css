@@ -20,9 +20,17 @@
   --red: #B8241C;
   --red-bg: #FBE3E1;
   --shadow: 0 6px 18px rgba(30, 41, 86, 0.08);
+  --shadow-cta: 0 8px 22px rgba(184, 63, 18, 0.35);
   --radius: 14px;
   --radius-lg: 22px;
   --max-w: 720px;
+
+  /* Flyer category strip palette (matched from Country Cycles flyer) */
+  --cat-ebike:  #E04A4A;   /* coral red */
+  --cat-gravel: #3E9D5C;   /* leaf green */
+  --cat-mtb:    #A8B0B8;   /* steel silver */
+  --cat-road:   #5BA8D9;   /* sky blue */
+  --cat-kids:   #E8B73E;   /* gold */
 }
 
 * { box-sizing: border-box; }
@@ -410,3 +418,302 @@ body {
   .screen--question .keef__sprite,
   .screen--result .keef__sprite { width: 140px; height: 140px; }
 }
+
+/* =============================================================
+   FLYER-STYLE HOME SCREEN
+   Horizontal bands stacked vertically, matching Country Cycles
+   marketing flyer. Edge-to-edge within the .main column.
+   ============================================================= */
+
+/* Category strip: navy band with colour-coded category words.
+   Sits directly under the brand bar. */
+.cat-strip {
+  background: var(--navy);
+  color: #fff;
+  text-align: center;
+  padding: 12px 14px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  font-size: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 10px;
+  border-bottom: 3px solid var(--orange);
+}
+.cat-strip__item { color: #fff; white-space: nowrap; }
+.cat-strip__item--ebike { color: var(--cat-ebike); }
+.cat-strip__item:nth-of-type(2) { color: var(--cat-gravel); }   /* GRAVEL */
+.cat-strip__item:nth-of-type(3) { color: var(--cat-mtb); }      /* MTB */
+.cat-strip__item:nth-of-type(4) { color: var(--cat-road); }     /* ROAD */
+.cat-strip__item:nth-of-type(5) { color: var(--cat-kids); }     /* KIDS */
+.cat-strip__sep { color: rgba(255,255,255,0.65); font-weight: 400; }
+
+@media (min-width: 600px) {
+  .cat-strip { font-size: 16px; gap: 6px 14px; padding: 14px; letter-spacing: 1.6px; }
+}
+
+/* Home screen breaks out of the standard .screen card so that
+   bands bleed edge-to-edge within the column. */
+.screen--home {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  margin: -20px -16px -40px;   /* negate the .main padding */
+  overflow: hidden;
+}
+
+/* Generic band: full-width horizontal strip */
+.band {
+  width: 100%;
+  padding: 22px 22px;
+  display: block;
+}
+.band--white  { background: #fff; color: var(--navy); }
+.band--navy   { background: var(--navy); color: #fff; }
+.band--orange { background: var(--orange); color: #fff; }
+.band--cream  { background: #FAF1E2; color: var(--ink); }
+.band--cta    { background: var(--cream); padding: 18px 22px; }
+
+/* White tagline band — flyer's "VISIT US FOR FREE ADVICE..." pattern */
+.band--tagline { padding: 14px 16px; text-align: center; }
+.band--tagline p {
+  margin: 0;
+  font-weight: 900;
+  letter-spacing: 1.6px;
+  font-size: 14px;
+  color: var(--navy);
+  text-transform: uppercase;
+}
+@media (min-width: 600px) {
+  .band--tagline p { font-size: 16px; letter-spacing: 2px; }
+}
+
+/* Hero band (navy) — headline + KEEF + intro */
+.band--hero { text-align: center; padding: 26px 22px 22px; }
+.hero__headline {
+  margin: 0 0 6px;
+  font-size: 24px;
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #fff;
+}
+.hero__subhead {
+  margin: 0 0 14px;
+  color: rgba(255,255,255,0.8);
+  font-size: 15px;
+  font-style: italic;
+}
+.hero__keef {
+  margin: 6px auto 14px;
+  display: flex;
+  justify-content: center;
+}
+.hero__keef-sprite {
+  width: 200px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,0.25));
+}
+.hero__intro {
+  margin: 0 auto;
+  max-width: 480px;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: #fff;
+}
+.hero__intro strong { color: var(--orange-light); font-weight: 800; }
+
+@media (min-width: 600px) {
+  .hero__headline { font-size: 30px; }
+  .hero__keef-sprite { width: 240px; }
+}
+
+/* Orange website prompt band */
+.band--web {
+  text-decoration: none;
+  text-align: center;
+  padding: 16px 22px;
+  display: block;
+  position: relative;
+  border-top: 4px solid var(--navy);
+  border-bottom: 4px solid var(--navy);
+}
+.web__label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.92);
+  margin-bottom: 4px;
+}
+.web__url {
+  display: block;
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 0.4px;
+}
+.band--web:hover .web__url { text-decoration: underline; }
+
+/* CTA band */
+.band--cta { text-align: center; padding: 22px 22px 12px; }
+.btn--cta-hero {
+  width: 100%;
+  background: var(--orange);
+  color: #fff;
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  padding: 18px 22px;
+  border: 0;
+  border-radius: 16px;
+  box-shadow: var(--shadow-cta);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.05s, background 0.15s, box-shadow 0.15s;
+}
+.btn--cta-hero:hover { background: var(--orange-dark); }
+.btn--cta-hero:active { transform: translateY(1px); }
+.btn__arrow { font-size: 22px; transform: translateY(-1px); }
+
+/* Cream disclaimer band (lighter than the old version) */
+.band--cream.disclaimer {
+  padding: 18px 22px 22px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+.disclaimer__title {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1.6px;
+  color: var(--orange-dark);
+  text-transform: uppercase;
+}
+.disclaimer__body {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #4A4438;
+}
+
+/* =============================================================
+   FOOTER CONTACT PANEL
+   Orange band with thin navy accent stripe above. Mirrors the
+   flyer's contact bar layout: icon + label + sub-line.
+   ============================================================= */
+.contact {
+  background: var(--orange);
+  color: #fff;
+  margin-top: 0;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 8px);
+}
+.contact__accent {
+  height: 8px;
+  background: var(--navy);
+}
+.contact__head {
+  text-align: center;
+  padding: 18px 22px 8px;
+}
+.contact__shop {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.contact__addr {
+  margin: 4px 0 8px;
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.92);
+}
+.contact__site {
+  display: inline-block;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  border-bottom: 1px dashed rgba(255,255,255,0.7);
+  padding-bottom: 1px;
+}
+.contact__site span { font-weight: 900; letter-spacing: 0.3px; }
+.contact__site:hover { border-bottom-style: solid; }
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 8px 12px 14px;
+}
+.contact-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255,255,255,0.10);
+  border: 1.5px solid rgba(255,255,255,0.45);
+  border-radius: 14px;
+  padding: 12px 10px;
+  min-height: 96px;
+  transition: background 0.15s, border-color 0.15s, transform 0.05s;
+}
+.contact-btn:hover {
+  background: rgba(255,255,255,0.20);
+  border-color: rgba(255,255,255,0.85);
+}
+.contact-btn:active { transform: scale(0.98); }
+.contact-btn__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  margin-bottom: 6px;
+  color: #fff;
+}
+.contact-btn__label {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  line-height: 1.2;
+}
+.contact-btn__sub {
+  font-size: 11.5px;
+  margin-top: 2px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+}
+
+.contact__legal {
+  text-align: center;
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.78);
+  padding: 4px 22px 12px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (min-width: 600px) {
+  .contact__grid { grid-template-columns: repeat(4, 1fr); padding: 8px 22px 16px; }
+  .contact-btn { min-height: 110px; padding: 14px 10px; }
+  .contact-btn__icon { width: 44px; height: 44px; }
+  .contact-btn__label { font-size: 14px; }
+}
+
+/* Hide the old footer styles cleanly if any markup still uses them */
+.brand-foot { display: none; }

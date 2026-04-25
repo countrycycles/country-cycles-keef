@@ -15,9 +15,11 @@ export const CAVEATS = {
 export const CONTACT = {
   shopName: 'Country Cycles',
   phone: '01360 550 372',
+  email: 'info@country-cycles.com',
   bookingUrl: '',
   address: 'Oakwood Garden Centre, Killearn, Glasgow G63 9PT',
   website: 'https://www.country-cycles.com',
+  instagramUrl: 'ADD_INSTAGRAM_LINK',
 };
 
 export const CTAS = {

@@ -37,21 +37,63 @@
     <button class="brand-bar__restart" id="restartBtn" type="button" hidden>Start over</button>
   </header>
 
+  <!-- Category strip — flyer-style retail accent -->
+  <nav class="cat-strip" aria-label="What we sell">
+    <span class="cat-strip__item cat-strip__item--ebike">EBIKES</span>
+    <span class="cat-strip__sep" aria-hidden="true">|</span>
+    <span class="cat-strip__item">GRAVEL</span>
+    <span class="cat-strip__sep" aria-hidden="true">|</span>
+    <span class="cat-strip__item">MTB</span>
+    <span class="cat-strip__sep" aria-hidden="true">|</span>
+    <span class="cat-strip__item">ROAD</span>
+    <span class="cat-strip__sep" aria-hidden="true">|</span>
+    <span class="cat-strip__item">KIDS</span>
+  </nav>
+
   <main id="main" class="main" role="main">
-    <!-- Home / intro screen -->
+    <!-- Home / welcome screen — flyer-style stacked horizontal bands. -->
     <section class="screen screen--home" id="screenHome" aria-labelledby="homeHeading">
-      <div class="keef" data-pose="wave" aria-hidden="true">
-        <img src="assets/keef/wave.png" alt="" class="keef__sprite" id="homeKeefSprite" />
+
+      <!-- White tagline strip -->
+      <div class="band band--white band--tagline">
+        <p>FREE BIKE CHECK · START HERE</p>
       </div>
-      <h1 id="homeHeading" class="screen__title">Right, what's the bike doing?</h1>
-      <p class="screen__intro">
-        I'm <strong>KEEF</strong> — Country Cycles' AI bike mechanic. I'll ask you a few quick questions and tell you whether it's a simple check, a workshop job, or one to stop and call us about.
-      </p>
-      <div class="caveat caveat--long" role="note">
-        <strong>Read first:</strong>
-        This tool provides general guidance only. Bike faults cannot be fully diagnosed or validated without speaking to our in-store team at Country Cycles Killearn. If you are unsure, if the bike feels unsafe, or if the issue affects braking, steering, wheels, frame, forks, e-bike electronics, or battery systems, please do not ride the bike until it has been checked by a qualified mechanic.
+
+      <!-- Navy hero band: headline, KEEF, intro -->
+      <div class="band band--navy band--hero">
+        <h1 id="homeHeading" class="hero__headline">NOT SURE WHAT'S WRONG WITH YOUR BIKE?</h1>
+        <p class="hero__subhead">Right, what's the bike doing?</p>
+
+        <div class="hero__keef" data-pose="wave" aria-hidden="true">
+          <img src="assets/keef/wave.png" alt="" class="hero__keef-sprite" id="homeKeefSprite" />
+        </div>
+
+        <p class="hero__intro">
+          I'm <strong>KEEF</strong> — Country Cycles' AI bike mechanic. I'll ask a few quick questions and point you in the right direction — whether it's a quick fix or something to bring into the workshop.
+        </p>
       </div>
-      <button type="button" class="btn btn--primary btn--large" id="startBtn">Start a check</button>
+
+      <!-- Orange feature band: website prompt -->
+      <a class="band band--orange band--web" href="https://www.country-cycles.com" target="_blank" rel="noopener">
+        <span class="web__label">VISIT US ONLINE FOR BIKES, SERVICING AND ADVICE</span>
+        <span class="web__url">www.country-cycles.com</span>
+      </a>
+
+      <!-- Strong CTA strip -->
+      <div class="band band--cta">
+        <button type="button" class="btn btn--cta-hero" id="startBtn">
+          <span>Start a check</span>
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      <!-- Soft cream disclaimer band -->
+      <aside class="band band--cream disclaimer" role="note" aria-labelledby="readFirstHeading">
+        <h2 class="disclaimer__title" id="readFirstHeading">READ THIS FIRST</h2>
+        <p class="disclaimer__body">
+          This tool provides general guidance only. Bike faults cannot be fully diagnosed or validated without speaking to our in-store team at Country Cycles Killearn. If you are unsure, if the bike feels unsafe, or if the issue affects braking, steering, wheels, frame, forks, e-bike electronics, or battery systems, please do not ride the bike until it has been checked by a qualified mechanic.
+        </p>
+      </aside>
     </section>
 
     <!-- Question screen -->
@@ -109,16 +151,66 @@
     </section>
   </main>
 
-  <footer class="brand-foot" role="contentinfo">
-    <p><strong>Country Cycles</strong> · Oakwood Garden Centre, Killearn, Glasgow G63 9PT</p>
-    <p><a href="tel:01360550372" class="brand-foot__phone">01360 550 372</a></p>
-    <p class="brand-foot__legal">KEEF is an assistant, not a mechanic. Always validated by our in-store team.</p>
+  <footer class="contact" role="contentinfo">
+    <!-- Thin navy accent stripe above orange band, like the flyer -->
+    <div class="contact__accent" aria-hidden="true"></div>
+
+    <!-- Address + website prompt -->
+    <div class="contact__head">
+      <p class="contact__shop"><strong>Country Cycles</strong></p>
+      <p class="contact__addr">Oakwood Garden Centre, Killearn, Glasgow G63 9PT</p>
+      <a class="contact__site" href="https://www.country-cycles.com" target="_blank" rel="noopener">
+        Visit our website: <span>www.country-cycles.com</span>
+      </a>
+    </div>
+
+    <!-- Contact buttons grid: Call | Email | Instagram | Website -->
+    <div class="contact__grid">
+      <a class="contact-btn" href="tel:01360550372" aria-label="Call Country Cycles on 01360 550 372">
+        <span class="contact-btn__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </span>
+        <span class="contact-btn__label">Call Country Cycles</span>
+        <span class="contact-btn__sub">01360 550 372</span>
+      </a>
+
+      <a class="contact-btn" href="mailto:info@country-cycles.com" aria-label="Email Country Cycles">
+        <span class="contact-btn__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6 12 13 2 6"/></svg>
+        </span>
+        <span class="contact-btn__label">Email the workshop</span>
+        <span class="contact-btn__sub">info@country-cycles.com</span>
+      </a>
+
+      <a class="contact-btn" id="instaBtn" href="" target="_blank" rel="noopener" aria-label="Message us on Instagram" hidden>
+        <span class="contact-btn__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        </span>
+        <span class="contact-btn__label">Message us on Instagram</span>
+        <span class="contact-btn__sub">@countrycycles</span>
+      </a>
+
+      <a class="contact-btn" href="https://www.country-cycles.com" target="_blank" rel="noopener" aria-label="Visit our website">
+        <span class="contact-btn__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </span>
+        <span class="contact-btn__label">Visit our website</span>
+        <span class="contact-btn__sub">country-cycles.com</span>
+      </a>
+    </div>
+
+    <p class="contact__legal">KEEF is an assistant, not a mechanic. Always validated by our in-store team.</p>
   </footer>
 
   <!-- Country Cycles contact config -->
   <script>
     window.COUNTRY_CYCLES_PHONE = '01360 550 372';
+    window.COUNTRY_CYCLES_EMAIL = 'info@country-cycles.com';
+    window.COUNTRY_CYCLES_WEBSITE = 'https://www.country-cycles.com';
     window.COUNTRY_CYCLES_ADDRESS = 'Oakwood Garden Centre, Killearn, Glasgow G63 9PT';
+    // Replace with the real Instagram URL when ready (e.g. https://instagram.com/countrycycles).
+    // The Instagram button stays hidden until this is populated.
+    window.COUNTRY_CYCLES_INSTAGRAM_URL = 'ADD_INSTAGRAM_LINK';
     // No online booking URL — Country Cycles takes appointments by phone.
     window.COUNTRY_CYCLES_BOOKING_URL = '';
   </script>

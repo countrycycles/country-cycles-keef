@@ -326,5 +326,20 @@ $('notSureBtn').addEventListener('click', () => {
 // Set the home keef sprite path (in case it needs the .png)
 setKeefSprite($('homeKeefSprite'), 'wave');
 
+// Wire the Instagram contact button — only shown if the URL has been
+// populated (we ship with the literal placeholder 'ADD_INSTAGRAM_LINK').
+(function wireInstagramBtn() {
+  const btn = document.getElementById('instaBtn');
+  if (!btn) return;
+  const url = window.COUNTRY_CYCLES_INSTAGRAM_URL || '';
+  const isPlaceholder = !url || url === 'ADD_INSTAGRAM_LINK';
+  if (isPlaceholder) {
+    btn.hidden = true;
+  } else {
+    btn.href = url;
+    btn.hidden = false;
+  }
+})();
+
 // Show home screen on load
 show(screens.home);
