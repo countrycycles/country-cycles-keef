@@ -16,9 +16,10 @@
   <link rel="manifest" href="manifest.webmanifest" />
 
   <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
   <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg" />
-  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="assets/icons/icon-192.png" />
 
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -91,14 +92,17 @@
   </main>
 
   <footer class="brand-foot" role="contentinfo">
-    <p>Country Cycles · Killearn · Stirlingshire</p>
+    <p><strong>Country Cycles</strong> · Oakwood Garden Centre, Killearn, Glasgow G63 9PT</p>
+    <p><a href="tel:01360550372" class="brand-foot__phone">01360 550 372</a></p>
     <p class="brand-foot__legal">KEEF is an assistant, not a mechanic. Always validated by our in-store team.</p>
   </footer>
 
-  <!-- Country Cycles contact config — populate from brand pack before deploy. -->
+  <!-- Country Cycles contact config -->
   <script>
-    window.COUNTRY_CYCLES_PHONE = '';        // e.g. '01360 550 022'
-    window.COUNTRY_CYCLES_BOOKING_URL = '';   // e.g. 'https://countrycycles.co.uk/book'
+    window.COUNTRY_CYCLES_PHONE = '01360 550 372';
+    window.COUNTRY_CYCLES_ADDRESS = 'Oakwood Garden Centre, Killearn, Glasgow G63 9PT';
+    // No online booking URL — Country Cycles takes appointments by phone.
+    window.COUNTRY_CYCLES_BOOKING_URL = '';
   </script>
 
   <script type="module" src="src/app.js"></script>

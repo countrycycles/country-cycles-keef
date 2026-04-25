@@ -216,14 +216,17 @@ function badgeLabel(tier) {
 function handleCta(ctaId) {
   const phone = window.COUNTRY_CYCLES_PHONE || '';
   const url = window.COUNTRY_CYCLES_BOOKING_URL || '';
-  if ((ctaId === 'CALL_SHOP_URGENT' || ctaId === 'CALL_SHOP_BATTERY') && phone) {
-    window.location.href = `tel:${phone.replace(/\s+/g, '')}`;
-  } else if (ctaId === 'BOOK_WORKSHOP' && url) {
-    window.location.href = url;
-  } else {
-    alert(
-      'To enable this button, set window.COUNTRY_CYCLES_PHONE and window.COUNTRY_CYCLES_BOOKING_URL in index.html before src/app.js loads.',
-    );
+  const telHref = phone ? `tel:${phone.replace(/\s+/g, '')}` : '';
+
+  if (ctaId === 'CALL_SHOP_URGENT' || ctaId === 'CALL_SHOP_BATTERY') {
+    if (telHref) window.location.href = telHref;
+    return;
+  }
+  if (ctaId === 'BOOK_WORKSHOP') {
+    // Country Cycles takes appointments by phone — fall back to a tel: link
+    // if no online booking URL is configured.
+    if (url) window.location.href = url;
+    else if (telHref) window.location.href = telHref;
   }
 }
 

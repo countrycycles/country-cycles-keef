@@ -2,13 +2,17 @@
 // Service worker for offline support. Cache-first for assets, network-first
 // for the HTML shell so updates land quickly.
 
-const CACHE = 'keef-v1';
+const CACHE = 'keef-v2';
 const SHELL = [
   './',
   './index.html',
   './styles.css',
   './manifest.webmanifest',
   './assets/icons/logo.svg',
+  './assets/icons/icon-192.png',
+  './assets/icons/icon-512.png',
+  './assets/icons/apple-touch-icon.png',
+  './assets/icons/favicon-32.png',
   './src/app.js',
   './src/triage/content.js',
   './src/triage/escalation.js',

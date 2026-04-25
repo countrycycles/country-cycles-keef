@@ -366,7 +366,9 @@ body {
   font-size: 13px;
 }
 .brand-foot p { margin: 4px 0; }
-.brand-foot__legal { color: rgba(255,255,255,0.7); font-size: 12px; }
+.brand-foot__phone { color: #fff; text-decoration: none; font-weight: 700; font-size: 16px; }
+.brand-foot__phone:hover { text-decoration: underline; }
+.brand-foot__legal { color: rgba(255,255,255,0.7); font-size: 12px; margin-top: 8px !important; }
 
 /* ================== Responsive nudges ================== */
 @media (min-width: 600px) {

@@ -2,8 +2,8 @@
 // Mandated caveats, contact details, CTA copy, and result-message templates.
 //
 // SAFETY-CRITICAL: the strings in CAVEATS are mandated wording and must be
-// rendered verbatim. The build pipeline must include a test that fails if
-// "inshore" appears anywhere in user-facing output.
+// rendered verbatim. The build pipeline must include a test that fails if a
+// common misspelling of the word "in-store" appears in user-facing output.
 
 export const CAVEATS = {
   long:
@@ -13,10 +13,11 @@ export const CAVEATS = {
 };
 
 export const CONTACT = {
-  shopName: 'Country Cycles Killearn',
-  phone: 'TBD',
-  bookingUrl: 'TBD',
-  address: 'Killearn, Stirlingshire',
+  shopName: 'Country Cycles',
+  phone: '01360 550 372',
+  bookingUrl: '',
+  address: 'Oakwood Garden Centre, Killearn, Glasgow G63 9PT',
+  website: 'https://www.country-cycles.com',
 };
 
 export const CTAS = {
