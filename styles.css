@@ -357,6 +357,39 @@ body {
   text-align: center;
 }
 
+/* ================== Photo-send section ================== */
+.photo-send {
+  margin-top: 16px;
+  background: var(--paper);
+  border: 2px dashed var(--orange);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  text-align: center;
+}
+.photo-send__title {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: 0.2px;
+}
+.photo-send__body {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: var(--ink);
+}
+.btn--photo {
+  display: inline-flex;
+  width: 100%;
+  font-size: 16px;
+}
+.photo-send__hint {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
 /* ================== Footer ================== */
 .brand-foot {
   background: var(--navy);

@@ -205,6 +205,75 @@ function renderResult(r) {
 
   $('shortCaveat').textContent = shortCaveat();
   $('restartBtn').hidden = false;
+
+  // Show the "send a photo" section for Amber and Red results.
+  // Green = no workshop visit needed, so no photo prompt.
+  const photoSend = $('photoSend');
+  if (r.tier === 'AMBER' || r.tier === 'RED') {
+    photoSend.hidden = false;
+    wirePhotoSend(r);
+  } else {
+    photoSend.hidden = true;
+  }
+}
+
+function buildBookingMessage(r) {
+  const lines = [];
+  lines.push(`Hi Country Cycles — KEEF AI Mechanic check.`);
+  lines.push('');
+  lines.push(`Result: ${r.tier} — ${r.headline}`);
+  const note = r.bookingNote || {};
+  if (note.bikeType) lines.push(`Bike: ${note.bikeType}`);
+  if (note.category) lines.push(`Issue area: ${note.category.replace(/_/g, ' ').toLowerCase()}`);
+  if (note.trigger)  lines.push(`Trigger: ${note.trigger}`);
+  const captured = note.captured || {};
+  if (captured.ebike_system)     lines.push(`E-bike system: ${captured.ebike_system}`);
+  if (captured.ebike_error_code) lines.push(`Error code: ${captured.ebike_error_code}`);
+  lines.push('');
+  lines.push('Photo of the issue attached.');
+  lines.push('');
+  lines.push('— sent from KEEF · Country Cycles AI Mechanic');
+  return lines.join('\n');
+}
+
+function wirePhotoSend(r) {
+  const input = $('photoInput');
+  // Clone and replace to clear any previous handler from a prior result.
+  const fresh = input.cloneNode(true);
+  input.parentNode.replaceChild(fresh, input);
+  fresh.addEventListener('change', async (ev) => {
+    const file = ev.target.files && ev.target.files[0];
+    if (!file) return;
+    await sharePhoto(file, r);
+    fresh.value = ''; // reset so the same file can be re-picked
+  });
+}
+
+async function sharePhoto(file, r) {
+  const text = buildBookingMessage(r);
+  const title = 'KEEF — bike issue photo';
+
+  // Web Share Level 2 (file sharing) — supported on iOS Safari, Chrome
+  // Android, Edge. The user picks Mail / WhatsApp / Messages from the
+  // native share sheet; the photo never touches our infrastructure.
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file], title, text });
+      return;
+    } catch (err) {
+      if (err && err.name === 'AbortError') return; // user cancelled
+      // fall through to fallback
+    }
+  }
+
+  // Fallback: copy the booking note to clipboard, prompt the user.
+  const phone = window.COUNTRY_CYCLES_PHONE || '01360 550 372';
+  try { await navigator.clipboard.writeText(text); } catch (e) { /* noop */ }
+  alert(
+    "Your browser can't share files directly.\n\n" +
+    'The booking note has been copied to your clipboard. ' +
+    `Phone the shop on ${phone}, or email Country Cycles, attach your photo, and paste the note.`,
+  );
 }
 
 function badgeLabel(tier) {

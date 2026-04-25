@@ -27,8 +27,8 @@
   <a class="skip-link" href="#main">Skip to main content</a>
 
   <header class="brand-bar" role="banner">
-    <a href="./" class="brand-bar__home" aria-label="KEEF home">
-      <img src="assets/icons/logo.svg" alt="" class="brand-bar__logo" aria-hidden="true" />
+    <a href="./" class="brand-bar__home" aria-label="KEEF — Country Cycles AI Mechanic, home">
+      <img src="assets/icons/mark.svg" alt="" class="brand-bar__logo" aria-hidden="true" />
       <span class="brand-bar__wordmark">
         <span class="brand-bar__line1">COUNTRY CYCLES</span>
         <span class="brand-bar__line2">AI MECHANIC</span>
@@ -82,6 +82,24 @@
         <div class="result-card__extra" id="resultExtra" hidden></div>
         <button type="button" class="btn btn--primary btn--cta" id="ctaBtn" hidden></button>
       </div>
+
+      <!-- Photo-send section. Shown for Amber and Red results only. Uses the
+           Web Share API to hand the photo to the user's chosen app (Mail,
+           WhatsApp, Messages). Fallback prompts for browsers without it. -->
+      <section class="photo-send" id="photoSend" hidden aria-labelledby="photoSendHeading">
+        <h3 class="photo-send__title" id="photoSendHeading">Send us a photo of the bike</h3>
+        <p class="photo-send__body">
+          A clear photo of the issue helps the workshop see what we're dealing with before you bring it in.
+        </p>
+        <label for="photoInput" class="btn btn--primary btn--photo">
+          <span aria-hidden="true">📷</span>&nbsp;Take or choose a photo
+        </label>
+        <input type="file" id="photoInput" accept="image/*" capture="environment" hidden />
+        <p class="photo-send__hint">
+          You'll pick how to send it — Mail, WhatsApp, or Messages — and it'll include a short summary of what KEEF found.
+        </p>
+      </section>
+
       <div class="caveat caveat--short" role="note" id="shortCaveat">
         Advice cannot be validated without speaking to our in-store team. If in doubt, don't ride — contact Country Cycles.
       </div>

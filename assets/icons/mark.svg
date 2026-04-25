@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" role="img" aria-label="Country Cycles">
+  <!-- Mark-only version of the Country Cycles bike-infinity logo.
+       Transparent background so it sits cleanly on the brand bar's orange. -->
+  <defs>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="0.6"/>
+      <feOffset dx="0" dy="0.6"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.25"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <g transform="translate(100 64)" filter="url(#soft)">
+    <!-- Soft peach drop pass behind the white -->
+    <g opacity="0.55">
+      <path d="M -78 0
+               C -78 -28, -56 -38, -34 -28
+               C -16 -20, -4 -8, 0 0
+               C 4 8, 16 20, 34 28
+               C 56 38, 78 28, 78 0
+               C 78 -28, 56 -38, 34 -28
+               C 16 -20, 4 -8, 0 0
+               C -4 8, -16 20, -34 28
+               C -56 38, -78 28, -78 0 Z"
+            fill="#FCE0CC"/>
+    </g>
+
+    <!-- White bike-infinity strokes -->
+    <g fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M -38 -27 A 30 30 0 1 0 -38 27"/>
+      <path d="M  38 -27 A 30 30 0 1 1  38 27"/>
+      <path d="M -38 -27 L  38  27"/>
+      <path d="M -38  27 L  38 -27"/>
+    </g>
+
+    <!-- Saddle / handlebar yoke -->
+    <g fill="#FFFFFF">
+      <rect x="-46" y="-58" width="26" height="6" rx="2"/>
+      <rect x="20"  y="-58" width="26" height="6" rx="2"/>
+      <rect x="-50" y="-52" width="100" height="5" rx="2"/>
+      <rect x="-3"  y="-52" width="6"  height="16" rx="1.5"/>
+    </g>
+  </g>
+</svg>
