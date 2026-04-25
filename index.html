@@ -4,18 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>KEEF — Country Cycles AI Mechanic</title>
-  <meta name="description" content="KEEF, the AI bike mechanic from Country Cycles Killearn. Quick triage for common bike faults. Always validated by our in-store team." />
+  <meta name="description" content="A short conversation with KEEF, Country Cycles' AI bike mechanic. Always validated by our in-store team." />
 
-  <!-- Theme -->
   <meta name="theme-color" content="#E25822" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="KEEF" />
 
-  <!-- PWA -->
   <link rel="manifest" href="manifest.webmanifest" />
 
-  <!-- Icons -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
   <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
@@ -26,180 +23,114 @@
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <header class="brand-bar" role="banner">
-    <a href="./" class="brand-bar__home" aria-label="KEEF — Country Cycles AI Mechanic, home">
-      <img src="assets/icons/mark.svg" alt="" class="brand-bar__logo" aria-hidden="true" />
-      <span class="brand-bar__wordmark">
-        <span class="brand-bar__line1">COUNTRY CYCLES</span>
-        <span class="brand-bar__line2">AI MECHANIC</span>
-      </span>
+  <!-- Slim top bar -->
+  <header class="topbar" role="banner">
+    <a href="./" class="topbar__home" aria-label="KEEF home">
+      <img src="assets/icons/mark.svg" alt="" class="topbar__mark" aria-hidden="true" />
+      <span class="topbar__name">AI MECHANIC</span>
     </a>
-    <button class="brand-bar__restart" id="restartBtn" type="button" hidden>Start over</button>
+    <div class="topbar__right">
+      <a href="https://www.country-cycles.com" target="_blank" rel="noopener" class="topbar__site">Visit website →</a>
+      <button class="topbar__reset" id="restartBtn" type="button" hidden aria-label="Start over">Reset</button>
+    </div>
   </header>
 
-  <!-- Category strip — flyer-style retail accent -->
-  <nav class="cat-strip" aria-label="What we sell">
-    <span class="cat-strip__item cat-strip__item--ebike">EBIKES</span>
-    <span class="cat-strip__sep" aria-hidden="true">|</span>
-    <span class="cat-strip__item">GRAVEL</span>
-    <span class="cat-strip__sep" aria-hidden="true">|</span>
-    <span class="cat-strip__item">MTB</span>
-    <span class="cat-strip__sep" aria-hidden="true">|</span>
-    <span class="cat-strip__item">ROAD</span>
-    <span class="cat-strip__sep" aria-hidden="true">|</span>
-    <span class="cat-strip__item">KIDS</span>
-  </nav>
+  <main id="main" class="stage" role="main">
 
-  <main id="main" class="main" role="main">
-    <!-- Home / welcome screen — flyer-style stacked horizontal bands. -->
-    <section class="screen screen--home" id="screenHome" aria-labelledby="homeHeading">
-
-      <!-- White tagline strip -->
-      <div class="band band--white band--tagline">
-        <p>FREE BIKE CHECK · START HERE</p>
+    <!-- HOME / GREETING -->
+    <section class="screen" id="screenHome" aria-labelledby="homeHeading">
+      <div class="keef-stage">
+        <img src="assets/keef/wave.png" alt="" class="keef-img" id="homeKeefSprite" />
       </div>
-
-      <!-- Navy hero band: headline, KEEF, intro -->
-      <div class="band band--navy band--hero">
-        <h1 id="homeHeading" class="hero__headline">NOT SURE WHAT'S WRONG WITH YOUR BIKE?</h1>
-        <p class="hero__subhead">Right, what's the bike doing?</p>
-
-        <div class="hero__keef" data-pose="wave" aria-hidden="true">
-          <img src="assets/keef/wave.png" alt="" class="hero__keef-sprite" id="homeKeefSprite" />
-        </div>
-
-        <p class="hero__intro">
-          I'm <strong>KEEF</strong> — Country Cycles' AI bike mechanic. I'll ask a few quick questions and point you in the right direction — whether it's a quick fix or something to bring into the workshop.
-        </p>
-      </div>
-
-      <!-- Orange feature band: website prompt -->
-      <a class="band band--orange band--web" href="https://www.country-cycles.com" target="_blank" rel="noopener">
-        <span class="web__label">VISIT US ONLINE FOR BIKES, SERVICING AND ADVICE</span>
-        <span class="web__url">www.country-cycles.com</span>
-      </a>
-
-      <!-- Strong CTA strip -->
-      <div class="band band--cta">
-        <button type="button" class="btn btn--cta-hero" id="startBtn">
-          <span>Start a check</span>
-          <span class="btn__arrow" aria-hidden="true">→</span>
+      <h1 class="speech" id="homeHeading">Right — what's the bike doing?</h1>
+      <p class="speech__sub">
+        I'm <strong>KEEF</strong>. I'll ask a few quick questions and point you in the right direction.
+      </p>
+      <div class="actions">
+        <button type="button" class="btn-pill btn-pill--primary" id="startBtn">
+          Let's go <span aria-hidden="true">→</span>
         </button>
       </div>
-
-      <!-- Soft cream disclaimer band -->
-      <aside class="band band--cream disclaimer" role="note" aria-labelledby="readFirstHeading">
-        <h2 class="disclaimer__title" id="readFirstHeading">READ THIS FIRST</h2>
-        <p class="disclaimer__body">
-          This tool provides general guidance only. Bike faults cannot be fully diagnosed or validated without speaking to our in-store team at Country Cycles Killearn. If you are unsure, if the bike feels unsafe, or if the issue affects braking, steering, wheels, frame, forks, e-bike electronics, or battery systems, please do not ride the bike until it has been checked by a qualified mechanic.
-        </p>
-      </aside>
     </section>
 
-    <!-- Question screen -->
-    <section class="screen screen--question" id="screenQuestion" aria-labelledby="questionHeading" hidden>
-      <div class="keef" data-pose="tablet" aria-hidden="true">
-        <img src="assets/keef/tablet.svg" alt="" class="keef__sprite" id="questionKeefSprite" />
+    <!-- QUESTION -->
+    <section class="screen" id="screenQuestion" aria-labelledby="questionHeading" hidden>
+      <div class="keef-stage">
+        <img alt="" class="keef-img" id="questionKeefSprite" />
       </div>
-      <p class="question__path" id="questionPath" aria-live="polite"></p>
-      <h2 class="screen__title" id="questionHeading"></h2>
-      <p class="screen__help" id="questionHelp" hidden></p>
+      <p class="speech__path" id="questionPath" aria-live="polite" hidden></p>
+      <h2 class="speech" id="questionHeading"></h2>
+      <p class="speech__sub" id="questionHelp" hidden></p>
       <div class="capture" id="questionCapture" hidden></div>
-      <div class="options" id="questionOptions" role="group" aria-label="Answer options"></div>
-      <button type="button" class="btn btn--ghost not-sure-btn" id="notSureBtn">
-        I'm not sure / not comfortable answering
-      </button>
+      <div class="actions" id="questionOptions" role="group" aria-label="Answers"></div>
+      <button type="button" class="btn-text" id="notSureBtn">I'm not sure</button>
     </section>
 
-    <!-- Result screen -->
+    <!-- RESULT -->
     <section class="screen screen--result" id="screenResult" aria-labelledby="resultHeading" hidden>
-      <div class="keef" id="resultKeef" aria-hidden="true">
-        <img src="" alt="" class="keef__sprite" id="resultKeefSprite" />
+      <div class="keef-stage">
+        <img alt="" class="keef-img" id="resultKeefSprite" />
       </div>
-      <div class="result-card" id="resultCard">
-        <span class="tier-badge" id="tierBadge"></span>
-        <h2 class="screen__title" id="resultHeading"></h2>
-        <p class="result-card__body" id="resultBody"></p>
-        <p class="result-card__action" id="resultAction"></p>
-        <div class="result-card__extra" id="resultExtra" hidden></div>
-        <button type="button" class="btn btn--primary btn--cta" id="ctaBtn" hidden></button>
+      <span class="tier-badge" id="tierBadge"></span>
+      <h2 class="speech" id="resultHeading"></h2>
+      <p class="speech__sub" id="resultBody"></p>
+      <p class="speech__action" id="resultAction"></p>
+      <div class="result-extra" id="resultExtra" hidden></div>
+
+      <div class="actions">
+        <button type="button" class="btn-pill btn-pill--primary" id="ctaBtn" hidden></button>
       </div>
 
-      <!-- Photo-send section. Shown for Amber and Red results only. Uses the
-           Web Share API to hand the photo to the user's chosen app (Mail,
-           WhatsApp, Messages). Fallback prompts for browsers without it. -->
+      <!-- Photo-send: Amber/Red only -->
       <section class="photo-send" id="photoSend" hidden aria-labelledby="photoSendHeading">
-        <h3 class="photo-send__title" id="photoSendHeading">Send us a photo of the bike</h3>
-        <p class="photo-send__body">
-          A clear photo of the issue helps the workshop see what we're dealing with before you bring it in.
-        </p>
-        <label for="photoInput" class="btn btn--primary btn--photo">
+        <h3 class="photo-send__title" id="photoSendHeading">Send us a photo</h3>
+        <p class="photo-send__body">A clear shot of the issue helps the workshop see it before you bring the bike in.</p>
+        <label for="photoInput" class="btn-pill btn-pill--ghost btn-pill--photo">
           <span aria-hidden="true">📷</span>&nbsp;Take or choose a photo
         </label>
         <input type="file" id="photoInput" accept="image/*" capture="environment" hidden />
-        <p class="photo-send__hint">
-          You'll pick how to send it — Mail, WhatsApp, or Messages — and it'll include a short summary of what KEEF found.
-        </p>
       </section>
 
-      <div class="caveat caveat--short" role="note" id="shortCaveat">
+      <!-- Secondary contacts: Instagram / Email / Website -->
+      <div class="contacts" id="resultContacts">
+        <a class="contact-pill" id="resultInstaBtn" href="" target="_blank" rel="noopener" hidden>
+          <span class="contact-pill__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </span>
+          Message on Instagram
+        </a>
+        <a class="contact-pill" href="mailto:info@country-cycles.com">
+          <span class="contact-pill__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6 12 13 2 6"/></svg>
+          </span>
+          Email the workshop
+        </a>
+        <a class="contact-pill" href="https://www.country-cycles.com" target="_blank" rel="noopener">
+          <span class="contact-pill__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </span>
+          Visit our website
+        </a>
+      </div>
+
+      <!-- Expandable disclaimer -->
+      <details class="readfirst">
+        <summary>Read this first</summary>
+        <p>This tool provides general guidance only. Bike faults cannot be fully diagnosed or validated without speaking to our in-store team at Country Cycles Killearn. If you are unsure, if the bike feels unsafe, or if the issue affects braking, steering, wheels, frame, forks, e-bike electronics, or battery systems, please do not ride the bike until it has been checked by a qualified mechanic.</p>
+      </details>
+
+      <p class="caveat-line" id="shortCaveat">
         Advice cannot be validated without speaking to our in-store team. If in doubt, don't ride — contact Country Cycles.
-      </div>
-      <div class="result-actions">
-        <button type="button" class="btn btn--ghost" id="resultRestartBtn">Start another check</button>
-      </div>
+      </p>
+
+      <button type="button" class="btn-text" id="resultRestartBtn">Start another check</button>
     </section>
+
   </main>
 
-  <footer class="contact" role="contentinfo">
-    <!-- Thin navy accent stripe above orange band, like the flyer -->
-    <div class="contact__accent" aria-hidden="true"></div>
-
-    <!-- Address + website prompt -->
-    <div class="contact__head">
-      <p class="contact__shop"><strong>Country Cycles</strong></p>
-      <p class="contact__addr">Oakwood Garden Centre, Killearn, Glasgow G63 9PT</p>
-      <a class="contact__site" href="https://www.country-cycles.com" target="_blank" rel="noopener">
-        Visit our website: <span>www.country-cycles.com</span>
-      </a>
-    </div>
-
-    <!-- Contact buttons grid: Call | Email | Instagram | Website -->
-    <div class="contact__grid">
-      <a class="contact-btn" href="tel:01360550372" aria-label="Call Country Cycles on 01360 550 372">
-        <span class="contact-btn__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </span>
-        <span class="contact-btn__label">Call Country Cycles</span>
-        <span class="contact-btn__sub">01360 550 372</span>
-      </a>
-
-      <a class="contact-btn" href="mailto:info@country-cycles.com" aria-label="Email Country Cycles">
-        <span class="contact-btn__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6 12 13 2 6"/></svg>
-        </span>
-        <span class="contact-btn__label">Email the workshop</span>
-        <span class="contact-btn__sub">info@country-cycles.com</span>
-      </a>
-
-      <a class="contact-btn" id="instaBtn" href="" target="_blank" rel="noopener" aria-label="Message us on Instagram" hidden>
-        <span class="contact-btn__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-        </span>
-        <span class="contact-btn__label">Message us on Instagram</span>
-        <span class="contact-btn__sub">@countrycycles</span>
-      </a>
-
-      <a class="contact-btn" href="https://www.country-cycles.com" target="_blank" rel="noopener" aria-label="Visit our website">
-        <span class="contact-btn__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        </span>
-        <span class="contact-btn__label">Visit our website</span>
-        <span class="contact-btn__sub">country-cycles.com</span>
-      </a>
-    </div>
-
-    <p class="contact__legal">KEEF is an assistant, not a mechanic. Always validated by our in-store team.</p>
+  <!-- Single tiny footer line, always visible -->
+  <footer class="micro-foot" role="contentinfo">
+    <p>Advice checked by our in-store team · Country Cycles, Killearn</p>
   </footer>
 
   <!-- Country Cycles contact config -->
@@ -209,9 +140,7 @@
     window.COUNTRY_CYCLES_WEBSITE = 'https://www.country-cycles.com';
     window.COUNTRY_CYCLES_ADDRESS = 'Oakwood Garden Centre, Killearn, Glasgow G63 9PT';
     // Replace with the real Instagram URL when ready (e.g. https://instagram.com/countrycycles).
-    // The Instagram button stays hidden until this is populated.
     window.COUNTRY_CYCLES_INSTAGRAM_URL = 'ADD_INSTAGRAM_LINK';
-    // No online booking URL — Country Cycles takes appointments by phone.
     window.COUNTRY_CYCLES_BOOKING_URL = '';
   </script>
 
