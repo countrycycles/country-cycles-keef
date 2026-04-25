@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Country Cycles AI Mechanic">
+  <!-- Orange brand background -->
+  <rect width="512" height="512" rx="64" fill="#E25822"/>
+
+  <!-- Bike-infinity CC mark, centred top -->
+  <g transform="translate(256 220)">
+    <!-- Soft drop shadow on the cream pass -->
+    <g opacity="0.45">
+      <path d="M -160 0
+               C -160 -55, -120 -75, -80 -55
+               C -40 -35, -10 -10, 0 0
+               C 10 10, 40 35, 80 55
+               C 120 75, 160 55, 160 0
+               C 160 -55, 120 -75, 80 -55
+               C 40 -35, 10 -10, 0 0
+               C -10 10, -40 35, -80 55
+               C -120 75, -160 55, -160 0 Z"
+            fill="#F8C8A8"/>
+    </g>
+
+    <!-- White infinity bike body -->
+    <g fill="none" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Left loop (C) -->
+      <path d="M -75 -55 A 65 65 0 1 0 -75 55"/>
+      <!-- Right loop (C, mirrored) -->
+      <path d="M 75 -55 A 65 65 0 1 1 75 55"/>
+      <!-- Crossover bar -->
+      <path d="M -75 -55 L 75 55"/>
+      <path d="M -75 55 L 75 -55"/>
+    </g>
+
+    <!-- Handlebar / saddle yoke (top) -->
+    <g fill="#FFFFFF" stroke="none">
+      <rect x="-95" y="-118" width="60" height="14" rx="4"/>
+      <rect x="35" y="-118" width="60" height="14" rx="4"/>
+      <rect x="-100" y="-104" width="200" height="10" rx="3"/>
+      <!-- Stem upright -->
+      <rect x="-6" y="-104" width="12" height="36" rx="2"/>
+    </g>
+  </g>
+
+  <!-- Wordmark -->
+  <g font-family="Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text x="256" y="396" fill="#1E2956" font-size="30" font-weight="700" letter-spacing="3">COUNTRY CYCLES</text>
+    <text x="256" y="448" fill="#1E2956" font-size="50" font-weight="900" letter-spacing="1">AI MECHANIC</text>
+  </g>
+</svg>

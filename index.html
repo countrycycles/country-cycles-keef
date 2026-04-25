@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>KEEF — Country Cycles AI Mechanic</title>
+  <meta name="description" content="KEEF, the AI bike mechanic from Country Cycles Killearn. Quick triage for common bike faults. Always validated by our in-store team." />
+
+  <!-- Theme -->
+  <meta name="theme-color" content="#E25822" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="KEEF" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.webmanifest" />
+
+  <!-- Icons -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-192.png" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="brand-bar" role="banner">
+    <a href="./" class="brand-bar__home" aria-label="KEEF home">
+      <img src="assets/icons/logo.svg" alt="" class="brand-bar__logo" aria-hidden="true" />
+      <span class="brand-bar__wordmark">
+        <span class="brand-bar__line1">COUNTRY CYCLES</span>
+        <span class="brand-bar__line2">AI MECHANIC</span>
+      </span>
+    </a>
+    <button class="brand-bar__restart" id="restartBtn" type="button" hidden>Start over</button>
+  </header>
+
+  <main id="main" class="main" role="main">
+    <!-- Home / intro screen -->
+    <section class="screen screen--home" id="screenHome" aria-labelledby="homeHeading">
+      <div class="keef" data-pose="wave" aria-hidden="true">
+        <img src="assets/keef/wave.png" alt="" class="keef__sprite" id="homeKeefSprite" />
+      </div>
+      <h1 id="homeHeading" class="screen__title">Right, what's the bike doing?</h1>
+      <p class="screen__intro">
+        I'm <strong>KEEF</strong> — Country Cycles' AI bike mechanic. I'll ask you a few quick questions and tell you whether it's a simple check, a workshop job, or one to stop and call us about.
+      </p>
+      <div class="caveat caveat--long" role="note">
+        <strong>Read first:</strong>
+        This tool provides general guidance only. Bike faults cannot be fully diagnosed or validated without speaking to our in-store team at Country Cycles Killearn. If you are unsure, if the bike feels unsafe, or if the issue affects braking, steering, wheels, frame, forks, e-bike electronics, or battery systems, please do not ride the bike until it has been checked by a qualified mechanic.
+      </div>
+      <button type="button" class="btn btn--primary btn--large" id="startBtn">Start a check</button>
+    </section>
+
+    <!-- Question screen -->
+    <section class="screen screen--question" id="screenQuestion" aria-labelledby="questionHeading" hidden>
+      <div class="keef" data-pose="tablet" aria-hidden="true">
+        <img src="assets/keef/tablet.svg" alt="" class="keef__sprite" id="questionKeefSprite" />
+      </div>
+      <p class="question__path" id="questionPath" aria-live="polite"></p>
+      <h2 class="screen__title" id="questionHeading"></h2>
+      <p class="screen__help" id="questionHelp" hidden></p>
+      <div class="capture" id="questionCapture" hidden></div>
+      <div class="options" id="questionOptions" role="group" aria-label="Answer options"></div>
+      <button type="button" class="btn btn--ghost not-sure-btn" id="notSureBtn">
+        I'm not sure / not comfortable answering
+      </button>
+    </section>
+
+    <!-- Result screen -->
+    <section class="screen screen--result" id="screenResult" aria-labelledby="resultHeading" hidden>
+      <div class="keef" id="resultKeef" aria-hidden="true">
+        <img src="" alt="" class="keef__sprite" id="resultKeefSprite" />
+      </div>
+      <div class="result-card" id="resultCard">
+        <span class="tier-badge" id="tierBadge"></span>
+        <h2 class="screen__title" id="resultHeading"></h2>
+        <p class="result-card__body" id="resultBody"></p>
+        <p class="result-card__action" id="resultAction"></p>
+        <div class="result-card__extra" id="resultExtra" hidden></div>
+        <button type="button" class="btn btn--primary btn--cta" id="ctaBtn" hidden></button>
+      </div>
+      <div class="caveat caveat--short" role="note" id="shortCaveat">
+        Advice cannot be validated without speaking to our in-store team. If in doubt, don't ride — contact Country Cycles.
+      </div>
+      <div class="result-actions">
+        <button type="button" class="btn btn--ghost" id="resultRestartBtn">Start another check</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="brand-foot" role="contentinfo">
+    <p>Country Cycles · Killearn · Stirlingshire</p>
+    <p class="brand-foot__legal">KEEF is an assistant, not a mechanic. Always validated by our in-store team.</p>
+  </footer>
+
+  <!-- Country Cycles contact config — populate from brand pack before deploy. -->
+  <script>
+    window.COUNTRY_CYCLES_PHONE = '';        // e.g. '01360 550 022'
+    window.COUNTRY_CYCLES_BOOKING_URL = '';   // e.g. 'https://countrycycles.co.uk/book'
+  </script>
+
+  <script type="module" src="src/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 260">
+  <defs>
+    <linearGradient id="orange" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F47A45"/><stop offset="100%" stop-color="#B83F12"/></linearGradient>
+    <linearGradient id="navy" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3B4A82"/><stop offset="100%" stop-color="#1E2956"/></linearGradient>
+    <radialGradient id="cog" cx="0.4" cy="0.4" r="0.7"><stop offset="0%" stop-color="#E6E9EE"/><stop offset="100%" stop-color="#5A6975"/></radialGradient>
+  </defs>
+  <line x1="92" y1="40" x2="84" y2="14" stroke="#3A4854" stroke-width="3" stroke-linecap="round"/>
+  <line x1="148" y1="40" x2="156" y2="18" stroke="#3A4854" stroke-width="3" stroke-linecap="round"/>
+  <g transform="translate(84,14)"><polygon points="0,-9 3,-3 9,-2 5,3 6,9 0,6 -6,9 -5,3 -9,-2 -3,-3" fill="url(#cog)" stroke="#2C3640" stroke-width="0.8"/></g>
+  <g transform="translate(156,18)"><polygon points="0,-9 3,-3 9,-2 5,3 6,9 0,6 -6,9 -5,3 -9,-2 -3,-3" fill="url(#cog)" stroke="#2C3640" stroke-width="0.8"/></g>
+  <!-- helmet back -->
+  <path d="M 60 80 Q 120 30 180 80 L 180 130 Q 120 145 60 130 Z" fill="url(#orange)"/>
+  <ellipse cx="56" cy="100" rx="8" ry="14" fill="#3A4854"/>
+  <ellipse cx="184" cy="100" rx="8" ry="14" fill="#3A4854"/>
+  <!-- back of body -->
+  <rect x="78" y="130" width="84" height="86" rx="10" fill="url(#navy)"/>
+  <!-- CC mark on back -->
+  <g transform="translate(120,170)" opacity="0.6">
+    <path d="M -22 0 A 14 14 0 1 0 -22 0.1" fill="none" stroke="#E25822" stroke-width="3"/>
+    <path d="M 22 0 A 14 14 0 1 1 22 0.1" fill="none" stroke="#E25822" stroke-width="3"/>
+    <line x1="-22" y1="-12" x2="22" y2="12" stroke="#E25822" stroke-width="3"/>
+    <line x1="-22" y1="12" x2="22" y2="-12" stroke="#E25822" stroke-width="3"/>
+  </g>
+  <line x1="78" y1="150" x2="50" y2="200" stroke="url(#navy)" stroke-width="14" stroke-linecap="round"/>
+  <line x1="162" y1="150" x2="190" y2="200" stroke="url(#navy)" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="46" cy="206" r="9" fill="#C9D2DD"/>
+  <circle cx="194" cy="206" r="9" fill="#C9D2DD"/>
+  <ellipse cx="100" cy="226" rx="12" ry="6" fill="#5A6975"/>
+  <ellipse cx="140" cy="226" rx="12" ry="6" fill="#5A6975"/>
+  <ellipse cx="120" cy="245" rx="48" ry="5" fill="#000" opacity="0.12"/>
+</svg>

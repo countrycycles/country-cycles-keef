@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 260">
+  <defs>
+    <linearGradient id="orange" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F47A45"/><stop offset="100%" stop-color="#B83F12"/></linearGradient>
+    <linearGradient id="navy" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3B4A82"/><stop offset="100%" stop-color="#1E2956"/></linearGradient>
+    <radialGradient id="face" cx="0.5" cy="0.4" r="0.65"><stop offset="0%" stop-color="#9DC9FF"/><stop offset="60%" stop-color="#3D7BD9"/><stop offset="100%" stop-color="#0E2A66"/></radialGradient>
+    <radialGradient id="cog" cx="0.4" cy="0.4" r="0.7"><stop offset="0%" stop-color="#E6E9EE"/><stop offset="100%" stop-color="#5A6975"/></radialGradient>
+  </defs>
+  <line x1="92" y1="40" x2="84" y2="14" stroke="#3A4854" stroke-width="3" stroke-linecap="round"/>
+  <line x1="148" y1="40" x2="156" y2="18" stroke="#3A4854" stroke-width="3" stroke-linecap="round"/>
+  <g transform="translate(84,14)"><polygon points="0,-9 3,-3 9,-2 5,3 6,9 0,6 -6,9 -5,3 -9,-2 -3,-3" fill="url(#cog)" stroke="#2C3640" stroke-width="0.8"/><circle r="2" fill="#1A222A"/></g>
+  <g transform="translate(156,18)"><polygon points="0,-9 3,-3 9,-2 5,3 6,9 0,6 -6,9 -5,3 -9,-2 -3,-3" fill="url(#cog)" stroke="#2C3640" stroke-width="0.8"/><circle r="2" fill="#1A222A"/></g>
+  <path d="M 60 80 Q 120 30 180 80 L 180 110 Q 120 95 60 110 Z" fill="url(#orange)"/>
+  <text x="120" y="78" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="18" font-weight="900" fill="#FFF6EE" letter-spacing="2">KEEF</text>
+  <ellipse cx="56" cy="100" rx="8" ry="14" fill="#3A4854"/>
+  <ellipse cx="184" cy="100" rx="8" ry="14" fill="#3A4854"/>
+  <rect x="68" y="92" width="104" height="56" rx="14" fill="url(#face)"/>
+  <!-- winking eye left -->
+  <path d="M 90 118 Q 96 113 102 118" stroke="#9DC9FF" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <circle cx="144" cy="118" r="6" fill="#9DC9FF"/>
+  <path d="M 102 132 Q 120 140 138 132" stroke="#9DC9FF" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <rect x="78" y="148" width="84" height="68" rx="10" fill="url(#navy)"/>
+  <rect x="86" y="160" width="68" height="56" rx="6" fill="#1E2956" stroke="#E25822" stroke-width="2"/>
+  <!-- tablet held -->
+  <rect x="58" y="170" width="124" height="46" rx="6" fill="#2C3640"/>
+  <rect x="64" y="176" width="112" height="34" rx="3" fill="#0E141C"/>
+  <circle cx="170" cy="180" r="3" fill="#4ADE80"/>
+  <circle cx="73" cy="186" r="3" fill="#FFE0CC"/>
+  <line x1="78" y1="186" x2="160" y2="186" stroke="#FFE0CC" stroke-width="1" opacity="0.6"/>
+  <line x1="78" y1="194" x2="140" y2="194" stroke="#FFE0CC" stroke-width="1" opacity="0.4"/>
+  <line x1="78" y1="202" x2="120" y2="202" stroke="#FFE0CC" stroke-width="1" opacity="0.4"/>
+  <!-- arms holding tablet -->
+  <circle cx="58" cy="190" r="10" fill="#C9D2DD"/>
+  <circle cx="182" cy="190" r="10" fill="#C9D2DD"/>
+  <ellipse cx="100" cy="226" rx="12" ry="6" fill="#5A6975"/>
+  <ellipse cx="140" cy="226" rx="12" ry="6" fill="#5A6975"/>
+  <ellipse cx="120" cy="245" rx="48" ry="5" fill="#000" opacity="0.12"/>
+</svg>
