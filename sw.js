@@ -1,13 +1,20 @@
 // Country Cycles Killearn — KEEF
-// Service worker for offline support. Cache-first for assets, network-first
-// for the HTML shell so updates land quickly.
+// Service worker for offline support.
+//
+// Strategy:
+//   • HTML, CSS, JS, manifest → network-first (fresh updates always land).
+//   • Images / fonts → stale-while-revalidate (fast paint, refreshed in bg).
+//   • Offline → fallback to cached copy.
+//
+// Bump CACHE on every deploy that touches CSS/JS so iOS reliably evicts.
 
-const CACHE = 'keef-v2';
+const CACHE = 'keef-v4';
 const SHELL = [
   './',
   './index.html',
   './styles.css',
   './manifest.webmanifest',
+  './assets/icons/mark.svg',
   './assets/icons/logo.svg',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
@@ -44,13 +51,21 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
+function isFreshness(url) {
+  // Anything that defines layout/behaviour gets network-first so updates
+  // land on the very next page load.
+  return /\.(html|css|js|webmanifest|json)$/.test(url.pathname) ||
+         url.pathname === '/' ||
+         url.pathname.endsWith('/');
+}
+
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
 
-  // HTML / shell: network first, cache fallback
-  if (req.mode === 'navigate' || url.pathname.endsWith('.html')) {
+  // Network-first: HTML, CSS, JS, manifest. Falls back to cache offline.
+  if (req.mode === 'navigate' || isFreshness(url)) {
     event.respondWith(
       fetch(req).then((res) => {
         const copy = res.clone();
@@ -61,12 +76,15 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Assets: cache first, network fallback
+  // Stale-while-revalidate: images and other static assets.
   event.respondWith(
-    caches.match(req).then((cached) => cached || fetch(req).then((res) => {
-      const copy = res.clone();
-      caches.open(CACHE).then((c) => c.put(req, copy));
-      return res;
-    })),
+    caches.match(req).then((cached) => {
+      const networkPromise = fetch(req).then((res) => {
+        const copy = res.clone();
+        caches.open(CACHE).then((c) => c.put(req, copy));
+        return res;
+      }).catch(() => cached);
+      return cached || networkPromise;
+    }),
   );
 });
