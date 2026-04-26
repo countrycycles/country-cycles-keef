@@ -70,6 +70,11 @@ export const RESULT_TEMPLATES = {
     body: 'Spin the chain backwards through the rear mech and watch for one link that jumps the jockey wheel — that one. A drop of chain lube on each side of that link, flex it gently side to side, wipe the excess. Should free up.',
     actionLine: 'If it persists after a clean and lube, book a slot.',
     ctaId: 'BOOK_WORKSHOP',
+    needs: [
+      { label: 'Chain lube',     search: 'chain lube' },
+      { label: 'Degreaser',      search: 'degreaser' },
+      { label: 'A clean rag',    search: 'cleaning cloth' },
+    ],
   },
   GREEN_TYRES_PUNCTURE_TUBED: {
     id: 'GREEN_TYRES_PUNCTURE_TUBED', tier: 'GREEN', keefPose: 'wrench_thumb',
@@ -77,6 +82,11 @@ export const RESULT_TEMPLATES = {
     body: "Replace the tube. Before fitting, run a finger carefully round the inside of the tyre — if a thorn or shard caused the puncture and it's still in there, the new tube goes the same way.",
     actionLine: "If you're getting repeated punctures in the same spot, that's a workshop job.",
     ctaId: 'NONE',
+    needs: [
+      { label: 'Replacement inner tube', search: 'inner tube' },
+      { label: 'Tyre levers',            search: 'tyre levers' },
+      { label: 'Mini pump or CO2',       search: 'mini pump' },
+    ],
   },
   GREEN_TYRES_TUBELESS_TOPUP: {
     id: 'GREEN_TYRES_TUBELESS_TOPUP', tier: 'GREEN', keefPose: 'idea',
@@ -84,6 +94,10 @@ export const RESULT_TEMPLATES = {
     body: "Tubeless sealant typically lasts two to six months depending on temperature and how much you ride. Going flat overnight with no obvious puncture usually means it's dried up. Top up through the valve, reinflate, spin the wheel to spread it.",
     actionLine: "If it won't hold air after a top-up, book a slot.",
     ctaId: 'BOOK_WORKSHOP',
+    needs: [
+      { label: 'Tubeless sealant',     search: 'tubeless sealant' },
+      { label: 'Valve core remover',   search: 'valve core' },
+    ],
   },
   GREEN_SUSPENSION_SAG: {
     id: 'GREEN_SUSPENSION_SAG', tier: 'GREEN', keefPose: 'idea',
@@ -91,6 +105,9 @@ export const RESULT_TEMPLATES = {
     body: "Suspension forks and shocks lose a bit of air over time. Set sag with a shock pump to the manufacturer's recommended pressure for your weight. If you don't have a shock pump, we can set it in store — it's a five-minute job.",
     actionLine: 'No shock pump? Pop in, we keep one on the counter.',
     ctaId: 'BOOK_WORKSHOP',
+    needs: [
+      { label: 'Shock pump', search: 'shock pump' },
+    ],
   },
   GREEN_EBIKE_LEGAL_LIMIT_NORMAL: {
     id: 'GREEN_EBIKE_LEGAL_LIMIT_NORMAL', tier: 'GREEN', keefPose: 'idea',

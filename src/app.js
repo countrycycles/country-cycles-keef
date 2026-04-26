@@ -281,6 +281,9 @@ function renderResult(r) {
   $('shortCaveat').textContent = shortCaveat();
   $('restartBtn').hidden = false;
 
+  // "What you'll need" — only show for GREEN results that have gear listed.
+  renderNeeds(r);
+
   // Instagram contact pill — only shown if the URL has been populated.
   const insta = $('resultInstaBtn');
   if (insta) {
@@ -289,6 +292,60 @@ function renderResult(r) {
     if (isPlaceholder) { insta.hidden = true; }
     else { insta.href = url; insta.hidden = false; }
   }
+}
+
+// Renders the "What you'll need" helper list. Only shown for GREEN results
+// that have a `needs` array on their template (chain lube, puncture repair,
+// tubeless top-up, shock pump). Quiet styling, never sales-driven.
+function renderNeeds(r) {
+  const section = $('resultNeeds');
+  const list = $('needsList');
+  list.innerHTML = '';
+  const items = (r.tier === 'GREEN' && Array.isArray(r.needs)) ? r.needs : null;
+  if (!items || items.length === 0) {
+    section.hidden = true;
+    return;
+  }
+  for (const item of items) {
+    const li = document.createElement('li');
+    const url = productUrl(item);
+    if (url) {
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = item.label;
+      a.appendChild(externalArrowSvg());
+      li.appendChild(a);
+    } else {
+      const span = document.createElement('span');
+      span.textContent = item.label;
+      li.appendChild(span);
+    }
+    list.appendChild(li);
+  }
+  section.hidden = false;
+}
+
+function externalArrowSvg() {
+  const span = document.createElement('span');
+  span.setAttribute('aria-hidden', 'true');
+  span.style.display = 'inline-flex';
+  span.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>';
+  return span;
+}
+
+// Build a product URL for a needs-item. Default: search query against
+// country-cycles.com. The shop can override this by setting
+// window.COUNTRY_CYCLES_PRODUCT_URL on a per-deploy basis (e.g. point
+// to specific product pages once the catalogue is online).
+function productUrl(item) {
+  if (item.url) return item.url;
+  const builder = window.COUNTRY_CYCLES_PRODUCT_URL_BUILDER;
+  if (typeof builder === 'function') return builder(item);
+  const base = (window.COUNTRY_CYCLES_WEBSITE || 'https://www.country-cycles.com').replace(/\/+$/, '');
+  const q = encodeURIComponent(item.search || item.label);
+  return `${base}/?s=${q}`;
 }
 
 function calloutTag(tier) {

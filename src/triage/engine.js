@@ -123,6 +123,7 @@ export class DiagnosticEngine {
       ctaLabel: cta.label,
       ctaUrgent: cta.urgent,
       ctaExtra: cta.extra,
+      needs: template.needs || null,
       shortCaveat: CAVEATS.short,
       bookingNote: {
         bikeType: this.state.bikeType,
