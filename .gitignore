@@ -1,5 +1,6 @@
-.DS_Store
 *.log
-node_modules/
+.DS_Store
 .idea/
 .vscode/
+assets/keef/_originals/
+node_modules/

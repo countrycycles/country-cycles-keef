@@ -8,12 +8,13 @@
 //
 // Bump CACHE on every deploy that touches CSS/JS so iOS reliably evicts.
 
-const CACHE = 'keef-v5';
+const CACHE = 'keef-v6';
 const SHELL = [
   './',
   './index.html',
   './styles.css',
   './manifest.webmanifest',
+  './assets/icons/mark.png',
   './assets/icons/mark.svg',
   './assets/icons/logo.svg',
   './assets/icons/icon-192.png',
