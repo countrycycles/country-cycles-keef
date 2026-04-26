@@ -93,7 +93,12 @@ function renderQuestion(q) {
     btn.className = 'option-btn';
     if (opt.redFlag) btn.classList.add('option-btn--danger');
     btn.textContent = opt.label;
-    btn.addEventListener('click', () => handleAnswer(opt));
+    btn.addEventListener('click', () => {
+      // Drop focus immediately so iOS Safari doesn't leave the tapped
+      // button visually highlighted while we render the next screen.
+      btn.blur();
+      handleAnswer(opt);
+    });
     optsEl.appendChild(btn);
   }
 

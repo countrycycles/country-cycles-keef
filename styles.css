@@ -242,14 +242,21 @@ body {
   color: #fff;
   box-shadow: var(--shadow-cta);
 }
-.btn-pill--primary:hover { background: var(--orange-dark); }
 
 .btn-pill--ghost {
   background: var(--paper);
   color: var(--navy);
   border: 1.5px solid var(--border);
 }
-.btn-pill--ghost:hover { border-color: var(--navy); background: var(--soft); }
+
+/* Hover effects only on devices that genuinely hover (mouse, trackpad).
+   On touch devices Safari leaves :hover applied after a tap, which made
+   tapped options look "highlighted in orange" and competed visually with
+   the red danger state. */
+@media (hover: hover) {
+  .btn-pill--primary:hover { background: var(--orange-dark); }
+  .btn-pill--ghost:hover   { border-color: var(--navy); background: var(--soft); }
+}
 
 /* Option buttons — same shape, slightly different feel */
 .option-btn {
@@ -267,17 +274,22 @@ body {
   font-family: inherit;
   line-height: 1.35;
   transition: border-color 0.15s, background 0.15s, transform 0.06s;
+  -webkit-tap-highlight-color: transparent;
 }
-.option-btn:hover { border-color: var(--orange); background: var(--soft); }
 .option-btn:active { transform: scale(0.99); }
-.option-btn:focus-visible { outline: 3px solid var(--orange-light); outline-offset: 2px; }
+/* Subtle keyboard-only focus ring — won't trigger on tap. */
+.option-btn:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
 .option-btn--danger {
   border-color: rgba(184, 36, 28, 0.3);
   background: rgba(184, 36, 28, 0.05);
   color: var(--red);
   font-weight: 700;
 }
-.option-btn--danger:hover { border-color: var(--red); background: rgba(184, 36, 28, 0.08); }
+
+@media (hover: hover) {
+  .option-btn:hover         { border-color: var(--orange); background: var(--soft); }
+  .option-btn--danger:hover { border-color: var(--red);    background: rgba(184, 36, 28, 0.08); }
+}
 
 .btn-text {
   display: block;
