@@ -14,7 +14,6 @@
   <link rel="manifest" href="manifest.webmanifest" />
 
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
-  <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
   <link rel="apple-touch-icon" sizes="192x192" href="assets/icons/icon-192.png" />
 
@@ -23,17 +22,18 @@
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <!-- Slim top bar -->
   <header class="topbar" role="banner">
     <a href="./" class="topbar__home" aria-label="KEEF home">
       <img src="assets/icons/mark.png" alt="" class="topbar__mark" aria-hidden="true" />
-      <span class="topbar__name">AI MECHANIC</span>
+      <span class="topbar__name">
+        <span class="topbar__name-1">COUNTRY CYCLES</span>
+        <span class="topbar__name-2">AI MECHANIC</span>
+      </span>
     </a>
     <div class="topbar__right">
-      <a href="https://www.country-cycles.com" target="_blank" rel="noopener" class="topbar__site">Visit website →</a>
       <button class="topbar__mute" id="muteBtn" type="button" aria-label="Mute KEEF sounds" aria-pressed="false">
-        <svg class="topbar__mute-on"  viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
-        <svg class="topbar__mute-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="22" y1="9"  x2="16" y2="15"/><line x1="16" y1="9"  x2="22" y2="15"/></svg>
+        <svg class="topbar__mute-on"  viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+        <svg class="topbar__mute-off" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="22" y1="9"  x2="16" y2="15"/><line x1="16" y1="9"  x2="22" y2="15"/></svg>
       </button>
       <button class="topbar__reset" id="restartBtn" type="button" hidden aria-label="Start over">Reset</button>
     </div>
@@ -43,73 +43,103 @@
 
     <!-- HOME / GREETING -->
     <section class="screen" id="screenHome" aria-labelledby="homeHeading">
-      <div class="keef-stage">
-        <img src="assets/keef/wave.png" alt="" class="keef-img" id="homeKeefSprite" />
+      <div class="chat">
+        <div class="chat__bubble" id="homeBubble">
+          <p class="chat__msg" id="homeHeading">Hi! I'm KEEF — your AI bike mechanic. How can I help you today?</p>
+          <div class="chat__meta">
+            <span class="chat__time" id="homeTime"></span>
+            <button class="chat__replay" type="button" data-replay="HELLO" aria-label="Replay KEEF's voice">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+            </button>
+          </div>
+        </div>
+        <img src="assets/keef/wave.png" alt="" class="chat__keef" id="homeKeefSprite" aria-hidden="true" />
       </div>
-      <h1 class="speech" id="homeHeading">Right — what's the bike doing?</h1>
-      <p class="speech__sub">
-        I'm <strong>KEEF</strong>. I'll ask a few quick questions and point you in the right direction.
-      </p>
+
       <div class="actions">
-        <button type="button" class="btn-pill btn-pill--primary" id="startBtn">
-          Let's go <span aria-hidden="true">→</span>
+        <button type="button" class="answer-card answer-card--primary" id="startBtn">
+          <span class="answer-card__label">Let's start</span>
+          <span class="answer-card__arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </span>
         </button>
       </div>
+
+      <a class="web-link" href="https://www.country-cycles.com" target="_blank" rel="noopener">
+        Visit our website for bikes, servicing and advice →
+      </a>
     </section>
 
     <!-- QUESTION -->
     <section class="screen" id="screenQuestion" aria-labelledby="questionHeading" hidden>
-      <div class="keef-stage">
-        <img alt="" class="keef-img" id="questionKeefSprite" />
+      <div class="chat">
+        <div class="chat__bubble">
+          <p class="chat__path" id="questionPath" aria-live="polite" hidden></p>
+          <p class="chat__msg" id="questionHeading"></p>
+          <p class="chat__help" id="questionHelp" hidden></p>
+          <div class="chat__meta">
+            <span class="chat__time" id="questionTime"></span>
+            <button class="chat__replay" type="button" data-replay="QUESTION" aria-label="Replay KEEF's voice">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+            </button>
+          </div>
+        </div>
+        <img alt="" class="chat__keef" id="questionKeefSprite" aria-hidden="true" />
       </div>
-      <p class="speech__path" id="questionPath" aria-live="polite" hidden></p>
-      <h2 class="speech" id="questionHeading"></h2>
-      <p class="speech__sub" id="questionHelp" hidden></p>
+
       <div class="capture" id="questionCapture" hidden></div>
       <div class="actions" id="questionOptions" role="group" aria-label="Answers"></div>
+
       <button type="button" class="btn-text" id="notSureBtn">I'm not sure</button>
     </section>
 
     <!-- RESULT -->
     <section class="screen screen--result" id="screenResult" aria-labelledby="resultHeading" hidden>
-      <div class="keef-stage">
-        <img alt="" class="keef-img" id="resultKeefSprite" />
+      <div class="chat">
+        <div class="chat__bubble">
+          <p class="chat__msg" id="resultHeading"></p>
+          <div class="chat__meta">
+            <span class="chat__time" id="resultTime"></span>
+            <button class="chat__replay" type="button" data-replay="auto" aria-label="Replay KEEF's voice">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+            </button>
+          </div>
+        </div>
+        <img alt="" class="chat__keef" id="resultKeefSprite" aria-hidden="true" />
       </div>
-      <span class="tier-badge" id="tierBadge"></span>
-      <h2 class="speech" id="resultHeading"></h2>
-      <p class="speech__sub" id="resultBody"></p>
-      <p class="speech__action" id="resultAction"></p>
-      <div class="result-extra" id="resultExtra" hidden></div>
 
-      <div class="actions">
-        <button type="button" class="btn-pill btn-pill--primary" id="ctaBtn" hidden></button>
+      <!-- Coloured verdict callout -->
+      <div class="callout" id="resultCallout" role="status">
+        <div class="callout__head">
+          <span class="callout__icon" id="resultCalloutIcon" aria-hidden="true"></span>
+          <span class="callout__tag" id="resultCalloutTag"></span>
+        </div>
+        <p class="callout__body" id="resultBody"></p>
+        <p class="callout__action" id="resultAction" hidden></p>
+        <div class="callout__extra" id="resultExtra" hidden></div>
+        <button type="button" class="answer-card answer-card--cta" id="ctaBtn" hidden>
+          <span class="answer-card__label" id="ctaBtnLabel"></span>
+          <span class="answer-card__arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </span>
+        </button>
       </div>
 
-      <!-- Photo-send: Amber/Red only -->
-      <section class="photo-send" id="photoSend" hidden aria-labelledby="photoSendHeading">
-        <h3 class="photo-send__title" id="photoSendHeading">Send us a photo</h3>
-        <p class="photo-send__body">A clear shot of the issue helps the workshop see it before you bring the bike in.</p>
-        <label for="photoInput" class="btn-pill btn-pill--ghost btn-pill--photo">
-          <span aria-hidden="true">📷</span>&nbsp;Take or choose a photo
-        </label>
-        <input type="file" id="photoInput" accept="image/*" capture="environment" hidden />
-      </section>
-
-      <!-- Secondary contacts: Instagram / Email / Website -->
-      <div class="contacts" id="resultContacts">
-        <a class="contact-pill" id="resultInstaBtn" href="" target="_blank" rel="noopener" hidden>
+      <!-- Contact panel — primary call + secondary pills -->
+      <div class="contacts" id="resultContacts" aria-label="Contact Country Cycles">
+        <a class="contact-pill contact-pill--secondary" id="resultInstaBtn" href="" target="_blank" rel="noopener" hidden>
           <span class="contact-pill__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
           </span>
           Message on Instagram
         </a>
-        <a class="contact-pill" href="mailto:info@country-cycles.com">
+        <a class="contact-pill contact-pill--secondary" href="mailto:info@country-cycles.com">
           <span class="contact-pill__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6 12 13 2 6"/></svg>
           </span>
           Email the workshop
         </a>
-        <a class="contact-pill" href="https://www.country-cycles.com" target="_blank" rel="noopener">
+        <a class="contact-pill contact-pill--secondary" href="https://www.country-cycles.com" target="_blank" rel="noopener">
           <span class="contact-pill__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           </span>
@@ -117,7 +147,6 @@
         </a>
       </div>
 
-      <!-- Expandable disclaimer -->
       <details class="readfirst">
         <summary>Read this first</summary>
         <p>This tool provides general guidance only. Bike faults cannot be fully diagnosed or validated without speaking to our in-store team at Country Cycles Killearn. If you are unsure, if the bike feels unsafe, or if the issue affects braking, steering, wheels, frame, forks, e-bike electronics, or battery systems, please do not ride the bike until it has been checked by a qualified mechanic.</p>
@@ -132,9 +161,11 @@
 
   </main>
 
-  <!-- Single tiny footer line, always visible -->
   <footer class="micro-foot" role="contentinfo">
-    <p>Advice checked by our in-store team · Country Cycles, Killearn</p>
+    <span class="micro-foot__shield" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 9.4 8 11 4.5-1.6 8-6 8-11V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>
+    </span>
+    <span>Advice checked by our in-store team</span>
   </footer>
 
   <!-- Country Cycles contact config -->
@@ -143,8 +174,8 @@
     window.COUNTRY_CYCLES_EMAIL = 'info@country-cycles.com';
     window.COUNTRY_CYCLES_WEBSITE = 'https://www.country-cycles.com';
     window.COUNTRY_CYCLES_ADDRESS = 'Oakwood Garden Centre, Killearn, Glasgow G63 9PT';
-    // Replace with the real Instagram URL when ready (e.g. https://instagram.com/countrycycles).
-    window.COUNTRY_CYCLES_INSTAGRAM_URL = 'ADD_INSTAGRAM_LINK';
+    // Replace ADD_LINK with the real Instagram URL when ready.
+    window.COUNTRY_CYCLES_INSTAGRAM_URL = 'ADD_LINK';
     window.COUNTRY_CYCLES_BOOKING_URL = '';
   </script>
 

@@ -1,6 +1,5 @@
 // Country Cycles Killearn — KEEF
-// UI layer. Drives the diagnostic engine and renders question/result screens.
-// Conversational chat-style: KEEF + one question + a few buttons per screen.
+// Chat-style guided UX. KEEF speaks in bubbles, user replies via card buttons.
 
 import { DiagnosticEngine, shortCaveat } from './triage/engine.js';
 import { keefSound, SOUNDS } from './sound.js';
@@ -18,23 +17,30 @@ const screens = {
 
 let engine = null;
 let pendingCapture = null;
+let lastReplayPose = 'wave';
 
-// ----- Screen transitions -----
+// ---------- Screen transitions ----------
 
 function show(screen) {
   for (const s of Object.values(screens)) s.hidden = true;
   screen.hidden = false;
   enter(screen);
-  const heading = screen.querySelector('h1, h2');
-  if (heading) heading.focus({ preventScroll: false });
+  const heading = screen.querySelector('h1, h2, .chat__msg');
+  if (heading && heading.focus) heading.focus({ preventScroll: false });
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
 function enter(el) {
   el.classList.remove('is-entering');
-  // Force a reflow so the animation restarts.
   void el.offsetWidth;
   el.classList.add('is-entering');
+  // Cascade onto the .actions row inside this screen too.
+  const actions = el.querySelector('.actions');
+  if (actions) {
+    actions.classList.remove('is-entering');
+    void actions.offsetWidth;
+    actions.classList.add('is-entering');
+  }
 }
 
 function setKeefSprite(imgEl, pose) {
@@ -48,36 +54,32 @@ function setKeefSprite(imgEl, pose) {
   };
 }
 
-// ----- Question rendering -----
+function nowHHMM() {
+  const d = new Date();
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+}
+
+// ---------- Question rendering ----------
 
 function renderQuestion(q) {
-  // Soundtrack: scan/beep for drill-down magnify questions, soft blip for
-  // entry questions, curious tone for thinking-pose clarifiers.
-  if (q.keefPose === 'magnify')   keefSound.play(SOUNDS.SCAN);
-  else if (q.keefPose === 'thinking') keefSound.play(SOUNDS.UNSURE);
-  else                                keefSound.play(SOUNDS.QUESTION);
+  // Soundtrack: scan for drill-down magnify, soft blip for entry questions.
+  if (q.keefPose === 'magnify')        keefSound.play(SOUNDS.SCAN);
+  else if (q.keefPose === 'thinking')  keefSound.play(SOUNDS.UNSURE);
+  else                                  keefSound.play(SOUNDS.QUESTION);
 
   $('questionHeading').textContent = q.text;
   setKeefSprite($('questionKeefSprite'), q.keefPose);
+  lastReplayPose = q.keefPose;
+  $('questionTime').textContent = nowHHMM();
 
   const path = $('questionPath');
   const label = pathLabel(q);
-  if (label) {
-    path.textContent = label;
-    path.hidden = false;
-  } else {
-    path.textContent = '';
-    path.hidden = true;
-  }
+  if (label) { path.textContent = label; path.hidden = false; }
+  else       { path.textContent = '';    path.hidden = true; }
 
   const help = $('questionHelp');
-  if (q.helpText) {
-    help.textContent = q.helpText;
-    help.hidden = false;
-  } else {
-    help.textContent = '';
-    help.hidden = true;
-  }
+  if (q.helpText) { help.textContent = q.helpText; help.hidden = false; }
+  else            { help.textContent = '';          help.hidden = true; }
 
   const optsEl = $('questionOptions');
   optsEl.innerHTML = '';
@@ -88,21 +90,9 @@ function renderQuestion(q) {
   pendingCapture = null;
 
   for (const opt of q.options) {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'option-btn';
-    if (opt.redFlag) btn.classList.add('option-btn--danger');
-    btn.textContent = opt.label;
-    btn.addEventListener('click', () => {
-      // Drop focus immediately so iOS Safari doesn't leave the tapped
-      // button visually highlighted while we render the next screen.
-      btn.blur();
-      handleAnswer(opt);
-    });
-    optsEl.appendChild(btn);
+    optsEl.appendChild(makeAnswerCard(opt));
   }
 
-  // Re-trigger entry animation on every question change for a calm fade.
   enter(screens.question);
 }
 
@@ -122,6 +112,30 @@ function pathLabel(q) {
   return map[q.category] || '';
 }
 
+function makeAnswerCard(opt) {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'answer-card';
+  if (opt.redFlag) btn.classList.add('answer-card--danger');
+
+  const label = document.createElement('span');
+  label.className = 'answer-card__label';
+  label.textContent = opt.label;
+  btn.appendChild(label);
+
+  const arrow = document.createElement('span');
+  arrow.className = 'answer-card__arrow';
+  arrow.setAttribute('aria-hidden', 'true');
+  arrow.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+  btn.appendChild(arrow);
+
+  btn.addEventListener('click', () => {
+    btn.blur();
+    handleAnswer(opt);
+  });
+  return btn;
+}
+
 function handleAnswer(opt) {
   if (opt.capture && opt.capture.length && !pendingCapture) {
     pendingCapture = renderCapture(opt);
@@ -137,28 +151,6 @@ function handleAnswer(opt) {
   } catch (err) {
     alert(err.message);
   }
-}
-
-// Brief "checking the workshop manual" transition before the result lands.
-// KEEF turns away (back_view) for ~800ms with the loading sound, then
-// turns to face the rider with their result.
-async function showResultWithLoading(r) {
-  // Reuse the question screen as a transient loading state.
-  show(screens.question);
-  setKeefSprite($('questionKeefSprite'), 'back_view');
-  $('questionPath').hidden = true;
-  $('questionHeading').textContent = 'Checking…';
-  $('questionHelp').hidden = true;
-  $('questionCapture').hidden = true;
-  $('questionOptions').innerHTML = '';
-  $('notSureBtn').hidden = true;
-
-  keefSound.loop(SOUNDS.LOADING);
-  await new Promise((res) => setTimeout(res, 800));
-  keefSound.stopLoop();
-
-  $('notSureBtn').hidden = false;
-  renderResult(r);
 }
 
 function renderCapture(opt) {
@@ -198,8 +190,8 @@ function renderCapture(opt) {
   }
   const confirm = document.createElement('button');
   confirm.type = 'button';
-  confirm.className = 'btn-pill btn-pill--primary';
-  confirm.textContent = 'Continue';
+  confirm.className = 'answer-card answer-card--primary';
+  confirm.innerHTML = '<span class="answer-card__label">Continue</span><span class="answer-card__arrow"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>';
   confirm.addEventListener('click', () => handleAnswer(opt));
   captureEl.appendChild(confirm);
   captureEl.hidden = false;
@@ -217,11 +209,33 @@ function collectCapture() {
   return out;
 }
 
-// ----- Result rendering -----
+// ---------- Loading transition ----------
+
+async function showResultWithLoading(r) {
+  show(screens.question);
+  setKeefSprite($('questionKeefSprite'), 'back_view');
+  $('questionPath').hidden = true;
+  $('questionHeading').textContent = 'Checking…';
+  $('questionHelp').hidden = true;
+  $('questionCapture').hidden = true;
+  $('questionOptions').innerHTML = '';
+  $('notSureBtn').hidden = true;
+
+  keefSound.loop(SOUNDS.LOADING);
+  await new Promise((res) => setTimeout(res, 800));
+  keefSound.stopLoop();
+
+  $('notSureBtn').hidden = false;
+  renderResult(r);
+}
+
+// ---------- Result rendering ----------
 
 function renderResult(r) {
   show(screens.result);
   setKeefSprite($('resultKeefSprite'), r.keefPose);
+  lastReplayPose = r.keefPose;
+  $('resultTime').textContent = nowHHMM();
 
   // Soundtrack tied to KEEF's pose so it always matches the visual register.
   if (r.keefPose === 'stop')              keefSound.play(SOUNDS.STOP);
@@ -230,58 +244,68 @@ function renderResult(r) {
   else if (r.keefPose === 'thinking')     keefSound.play(SOUNDS.UNSURE);
   else                                    keefSound.play(SOUNDS.TIP);
 
-  const badge = $('tierBadge');
-  badge.className = 'tier-badge tier-badge--' + r.tier.toLowerCase();
-  badge.textContent = badgeLabel(r.tier);
-
+  // The bubble carries the headline (KEEF's voice). The callout below
+  // carries the verdict tag, body, and CTA.
   $('resultHeading').textContent = r.headline;
+
+  const callout = $('resultCallout');
+  callout.className = 'callout callout--' + r.tier.toLowerCase();
+
+  const tag = $('resultCalloutTag');
+  tag.textContent = calloutTag(r.tier);
+
+  const icon = $('resultCalloutIcon');
+  icon.innerHTML = calloutIcon(r.tier);
+
   $('resultBody').textContent = r.body;
-  $('resultAction').textContent = r.actionLine;
+
+  const action = $('resultAction');
+  if (r.actionLine) { action.textContent = r.actionLine; action.hidden = false; }
+  else              { action.textContent = '';            action.hidden = true; }
 
   const extra = $('resultExtra');
-  if (r.ctaExtra) {
-    extra.textContent = r.ctaExtra;
-    extra.hidden = false;
-  } else {
-    extra.textContent = '';
-    extra.hidden = true;
-  }
+  if (r.ctaExtra) { extra.textContent = r.ctaExtra; extra.hidden = false; }
+  else            { extra.textContent = '';          extra.hidden = true; }
 
   const cta = $('ctaBtn');
+  const ctaLabel = $('ctaBtnLabel');
   if (r.ctaId === 'NONE' || !r.ctaLabel) {
     cta.hidden = true;
   } else {
     cta.hidden = false;
-    cta.textContent = r.ctaLabel;
+    cta.classList.toggle('answer-card--urgent', !!r.ctaUrgent);
+    ctaLabel.textContent = r.ctaLabel;
     cta.onclick = () => handleCta(r.ctaId);
   }
 
   $('shortCaveat').textContent = shortCaveat();
   $('restartBtn').hidden = false;
 
-  // Photo-send only on Amber/Red.
-  const photoSend = $('photoSend');
-  if (r.tier === 'AMBER' || r.tier === 'RED') {
-    photoSend.hidden = false;
-    wirePhotoSend(r);
-  } else {
-    photoSend.hidden = true;
-  }
-
-  // Instagram pill on result screen.
+  // Instagram contact pill — only shown if the URL has been populated.
   const insta = $('resultInstaBtn');
   if (insta) {
     const url = window.COUNTRY_CYCLES_INSTAGRAM_URL || '';
-    const isPlaceholder = !url || url === 'ADD_INSTAGRAM_LINK';
+    const isPlaceholder = !url || url === 'ADD_LINK' || url === 'ADD_INSTAGRAM_LINK';
     if (isPlaceholder) { insta.hidden = true; }
     else { insta.href = url; insta.hidden = false; }
   }
 }
 
-function badgeLabel(tier) {
-  if (tier === 'GREEN') return 'Safe simple check';
-  if (tier === 'AMBER') return 'Workshop recommended';
-  return "Don't ride — contact us";
+function calloutTag(tier) {
+  if (tier === 'GREEN') return "YOU'RE SORTED";
+  if (tier === 'AMBER') return 'WORKSHOP RECOMMENDED';
+  return 'DO NOT RIDE';
+}
+
+function calloutIcon(tier) {
+  if (tier === 'GREEN') {
+    return '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+  }
+  if (tier === 'AMBER') {
+    return '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+  }
+  // RED
+  return '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3z"/><path d="M12 10v5"/><path d="M12 18v.01"/></svg>';
 }
 
 function handleCta(ctaId) {
@@ -298,60 +322,29 @@ function handleCta(ctaId) {
   }
 }
 
-// ----- Photo send -----
+// ---------- Replay buttons ----------
 
-function buildBookingMessage(r) {
-  const lines = [];
-  lines.push('Hi Country Cycles — KEEF AI Mechanic check.');
-  lines.push('');
-  lines.push(`Result: ${r.tier} — ${r.headline}`);
-  const note = r.bookingNote || {};
-  if (note.bikeType) lines.push(`Bike: ${note.bikeType}`);
-  if (note.category) lines.push(`Issue area: ${note.category.replace(/_/g, ' ').toLowerCase()}`);
-  if (note.trigger)  lines.push(`Trigger: ${note.trigger}`);
-  const captured = note.captured || {};
-  if (captured.ebike_system)     lines.push(`E-bike system: ${captured.ebike_system}`);
-  if (captured.ebike_error_code) lines.push(`Error code: ${captured.ebike_error_code}`);
-  lines.push('');
-  lines.push('Photo of the issue attached.');
-  lines.push('');
-  lines.push('— sent from KEEF · Country Cycles AI Mechanic');
-  return lines.join('\n');
-}
-
-function wirePhotoSend(r) {
-  const input = $('photoInput');
-  const fresh = input.cloneNode(true);
-  input.parentNode.replaceChild(fresh, input);
-  fresh.addEventListener('change', async (ev) => {
-    const file = ev.target.files && ev.target.files[0];
-    if (!file) return;
-    await sharePhoto(file, r);
-    fresh.value = '';
+function wireReplayButtons() {
+  document.querySelectorAll('.chat__replay').forEach((btn) => {
+    btn.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      const which = btn.dataset.replay;
+      if (which === 'auto') {
+        // Replay based on the most recent pose.
+        if (lastReplayPose === 'stop')              keefSound.play(SOUNDS.STOP);
+        else if (lastReplayPose === 'wrench_thumb') keefSound.play(SOUNDS.SUCCESS);
+        else if (lastReplayPose === 'idea')         keefSound.play(SOUNDS.TIP);
+        else if (lastReplayPose === 'thinking')     keefSound.play(SOUNDS.UNSURE);
+        else if (lastReplayPose === 'magnify')      keefSound.play(SOUNDS.SCAN);
+        else                                         keefSound.play(SOUNDS.QUESTION);
+      } else if (SOUNDS[which]) {
+        keefSound.play(SOUNDS[which]);
+      }
+    });
   });
 }
 
-async function sharePhoto(file, r) {
-  const text = buildBookingMessage(r);
-  const title = 'KEEF — bike issue photo';
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
-    try {
-      await navigator.share({ files: [file], title, text });
-      return;
-    } catch (err) {
-      if (err && err.name === 'AbortError') return;
-    }
-  }
-  const phone = window.COUNTRY_CYCLES_PHONE || '01360 550 372';
-  try { await navigator.clipboard.writeText(text); } catch (e) { /* noop */ }
-  alert(
-    "Your browser can't share files directly.\n\n" +
-    'The booking note has been copied to your clipboard. ' +
-    `Phone the shop on ${phone}, or email Country Cycles, attach your photo, and paste the note.`,
-  );
-}
-
-// ----- App lifecycle -----
+// ---------- App lifecycle ----------
 
 function start() {
   engine = new DiagnosticEngine();
@@ -365,7 +358,9 @@ function restart() {
   keefSound.stopLoop();
   show(screens.home);
   $('restartBtn').hidden = true;
+  $('homeTime').textContent = nowHHMM();
   keefSound.play(SOUNDS.HELLO);
+  lastReplayPose = 'wave';
 }
 
 $('startBtn').addEventListener('click', () => {
@@ -381,7 +376,7 @@ $('notSureBtn').addEventListener('click', () => {
   showResultWithLoading(engine.result());
 });
 
-// Mute toggle: persists in localStorage, swaps the icon, and announces state.
+// Mute toggle
 const muteBtn = document.getElementById('muteBtn');
 const muteOn  = muteBtn.querySelector('.topbar__mute-on');
 const muteOff = muteBtn.querySelector('.topbar__mute-off');
@@ -393,8 +388,13 @@ keefSound.onMuteChange((muted) => {
 });
 muteBtn.addEventListener('click', () => keefSound.toggleMute());
 
-// Unlock audio on the very first user gesture (tap / click / key).
+// Audio unlock on first user gesture
 keefSound.unlockOnFirstGesture();
 
+// Wire replay buttons in every chat bubble
+wireReplayButtons();
+
+// Initial paint
 setKeefSprite($('homeKeefSprite'), 'wave');
+$('homeTime').textContent = nowHHMM();
 show(screens.home);
