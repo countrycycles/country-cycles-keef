@@ -335,17 +335,18 @@ function externalArrowSvg() {
   return span;
 }
 
-// Build a product URL for a needs-item. Default: search query against
-// country-cycles.com. The shop can override this by setting
-// window.COUNTRY_CYCLES_PRODUCT_URL on a per-deploy basis (e.g. point
-// to specific product pages once the catalogue is online).
+// Build a product URL for a needs-item.
+//   1) item.url            — explicit product page (preferred)
+//   2) custom URL builder  — window.COUNTRY_CYCLES_PRODUCT_URL_BUILDER
+//   3) default search URL  — /search/<term-with-plus>/ pattern, matching
+//                            country-cycles.com's actual search route
 function productUrl(item) {
   if (item.url) return item.url;
   const builder = window.COUNTRY_CYCLES_PRODUCT_URL_BUILDER;
   if (typeof builder === 'function') return builder(item);
   const base = (window.COUNTRY_CYCLES_WEBSITE || 'https://www.country-cycles.com').replace(/\/+$/, '');
-  const q = encodeURIComponent(item.search || item.label);
-  return `${base}/?s=${q}`;
+  const term = (item.search || item.label).trim().replace(/\s+/g, '+');
+  return `${base}/search/${term}/`;
 }
 
 function calloutTag(tier) {

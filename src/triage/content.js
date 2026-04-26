@@ -71,9 +71,9 @@ export const RESULT_TEMPLATES = {
     actionLine: 'If it persists after a clean and lube, book a slot.',
     ctaId: 'BOOK_WORKSHOP',
     needs: [
-      { label: 'Chain lube',     search: 'chain lube' },
-      { label: 'Degreaser',      search: 'degreaser' },
-      { label: 'A clean rag',    search: 'cleaning cloth' },
+      { label: 'Chain lube',     url: 'https://www.country-cycles.com/peatys-linklube-all-weather-120ml-box-12-single.html' },
+      { label: 'Degreaser',      url: 'https://www.country-cycles.com/peatys-1000-ml-foaming-drivetrain-degreaser-box-12.html' },
+      { label: 'A clean rag',    search: 'cleaning' },
     ],
   },
   GREEN_TYRES_PUNCTURE_TUBED: {
@@ -84,8 +84,8 @@ export const RESULT_TEMPLATES = {
     ctaId: 'NONE',
     needs: [
       { label: 'Replacement inner tube', search: 'inner tube' },
-      { label: 'Tyre levers',            search: 'tyre levers' },
-      { label: 'Mini pump or CO2',       search: 'mini pump' },
+      { label: 'Tyre levers',            search: 'tyre lever' },
+      { label: 'Mini pump',              url: 'https://www.country-cycles.com/pump-truflo-electron-compact-electric.html' },
     ],
   },
   GREEN_TYRES_TUBELESS_TOPUP: {
@@ -95,7 +95,8 @@ export const RESULT_TEMPLATES = {
     actionLine: "If it won't hold air after a top-up, book a slot.",
     ctaId: 'BOOK_WORKSHOP',
     needs: [
-      { label: 'Tubeless sealant',     search: 'tubeless sealant' },
+      { label: 'Tubeless sealant',     url: 'https://www.country-cycles.com/peatys-120-ml-tubeless-sealant-trail-pouch-12-unit.html' },
+      { label: 'Plug pack (for cuts)', url: 'https://www.country-cycles.com/dynaplug-plug-pack-3-x-soft-nose-and-2-x-mega-plug.html' },
       { label: 'Valve core remover',   search: 'valve core' },
     ],
   },
