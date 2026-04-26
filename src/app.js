@@ -3,6 +3,7 @@
 // Conversational chat-style: KEEF + one question + a few buttons per screen.
 
 import { DiagnosticEngine, shortCaveat } from './triage/engine.js';
+import { keefSound, SOUNDS } from './sound.js';
 
 const KEEF_SPRITE_BASE = 'assets/keef/';
 const KEEF_EXT = 'png';
@@ -50,6 +51,12 @@ function setKeefSprite(imgEl, pose) {
 // ----- Question rendering -----
 
 function renderQuestion(q) {
+  // Soundtrack: scan/beep for drill-down magnify questions, soft blip for
+  // entry questions, curious tone for thinking-pose clarifiers.
+  if (q.keefPose === 'magnify')   keefSound.play(SOUNDS.SCAN);
+  else if (q.keefPose === 'thinking') keefSound.play(SOUNDS.UNSURE);
+  else                                keefSound.play(SOUNDS.QUESTION);
+
   $('questionHeading').textContent = q.text;
   setKeefSprite($('questionKeefSprite'), q.keefPose);
 
@@ -121,10 +128,32 @@ function handleAnswer(opt) {
   try {
     const next = engine.answer(opt.id, captured);
     if (next) renderQuestion(next);
-    else renderResult(engine.result());
+    else showResultWithLoading(engine.result());
   } catch (err) {
     alert(err.message);
   }
+}
+
+// Brief "checking the workshop manual" transition before the result lands.
+// KEEF turns away (back_view) for ~800ms with the loading sound, then
+// turns to face the rider with their result.
+async function showResultWithLoading(r) {
+  // Reuse the question screen as a transient loading state.
+  show(screens.question);
+  setKeefSprite($('questionKeefSprite'), 'back_view');
+  $('questionPath').hidden = true;
+  $('questionHeading').textContent = 'Checking…';
+  $('questionHelp').hidden = true;
+  $('questionCapture').hidden = true;
+  $('questionOptions').innerHTML = '';
+  $('notSureBtn').hidden = true;
+
+  keefSound.loop(SOUNDS.LOADING);
+  await new Promise((res) => setTimeout(res, 800));
+  keefSound.stopLoop();
+
+  $('notSureBtn').hidden = false;
+  renderResult(r);
 }
 
 function renderCapture(opt) {
@@ -188,6 +217,13 @@ function collectCapture() {
 function renderResult(r) {
   show(screens.result);
   setKeefSprite($('resultKeefSprite'), r.keefPose);
+
+  // Soundtrack tied to KEEF's pose so it always matches the visual register.
+  if (r.keefPose === 'stop')              keefSound.play(SOUNDS.STOP);
+  else if (r.keefPose === 'wrench_thumb') keefSound.play(SOUNDS.SUCCESS);
+  else if (r.keefPose === 'idea')         keefSound.play(SOUNDS.TIP);
+  else if (r.keefPose === 'thinking')     keefSound.play(SOUNDS.UNSURE);
+  else                                    keefSound.play(SOUNDS.TIP);
 
   const badge = $('tierBadge');
   badge.className = 'tier-badge tier-badge--' + r.tier.toLowerCase();
@@ -321,18 +357,39 @@ function start() {
 
 function restart() {
   engine = null;
+  keefSound.stopLoop();
   show(screens.home);
   $('restartBtn').hidden = true;
+  keefSound.play(SOUNDS.HELLO);
 }
 
-$('startBtn').addEventListener('click', start);
+$('startBtn').addEventListener('click', () => {
+  keefSound.play(SOUNDS.HELLO);
+  start();
+});
 $('restartBtn').addEventListener('click', restart);
 $('resultRestartBtn').addEventListener('click', restart);
 $('notSureBtn').addEventListener('click', () => {
   if (!engine) return;
+  keefSound.play(SOUNDS.UNSURE);
   engine.exitNotSure();
-  renderResult(engine.result());
+  showResultWithLoading(engine.result());
 });
+
+// Mute toggle: persists in localStorage, swaps the icon, and announces state.
+const muteBtn = document.getElementById('muteBtn');
+const muteOn  = muteBtn.querySelector('.topbar__mute-on');
+const muteOff = muteBtn.querySelector('.topbar__mute-off');
+keefSound.onMuteChange((muted) => {
+  muteBtn.setAttribute('aria-pressed', muted ? 'true' : 'false');
+  muteBtn.setAttribute('aria-label', muted ? 'Unmute KEEF sounds' : 'Mute KEEF sounds');
+  muteOn.hidden  = muted;
+  muteOff.hidden = !muted;
+});
+muteBtn.addEventListener('click', () => keefSound.toggleMute());
+
+// Unlock audio on the very first user gesture (tap / click / key).
+keefSound.unlockOnFirstGesture();
 
 setKeefSprite($('homeKeefSprite'), 'wave');
 show(screens.home);

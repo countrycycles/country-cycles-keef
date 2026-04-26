@@ -8,7 +8,7 @@
 //
 // Bump CACHE on every deploy that touches CSS/JS so iOS reliably evicts.
 
-const CACHE = 'keef-v6';
+const CACHE = 'keef-v7';
 const SHELL = [
   './',
   './index.html',
@@ -22,6 +22,7 @@ const SHELL = [
   './assets/icons/apple-touch-icon.png',
   './assets/icons/favicon-32.png',
   './src/app.js',
+  './src/sound.js',
   './src/triage/content.js',
   './src/triage/escalation.js',
   './src/triage/tree.js',
@@ -34,6 +35,14 @@ const SHELL = [
   './assets/keef/thinking.png',
   './assets/keef/magnify.png',
   './assets/keef/stop.png',
+  './assets/sounds/keef_01_hello.mp4',
+  './assets/sounds/keef_02_question.mp4',
+  './assets/sounds/keef_03_success.mp4',
+  './assets/sounds/keef_04_loading.mp4',
+  './assets/sounds/keef_05_tip.mp4',
+  './assets/sounds/keef_06_unsure.mp4',
+  './assets/sounds/keef_07_scan.mp4',
+  './assets/sounds/keef_08_stop.mp4',
 ];
 
 self.addEventListener('install', (event) => {

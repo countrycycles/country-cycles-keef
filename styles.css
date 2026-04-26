@@ -100,6 +100,24 @@ body {
 }
 .topbar__reset:hover { background: rgba(255,255,255,0.28); }
 
+.topbar__mute {
+  background: transparent;
+  color: #fff;
+  border: 0;
+  padding: 6px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.topbar__mute:hover { background: rgba(255,255,255,0.18); }
+.topbar__mute[aria-pressed="true"] { color: rgba(255,255,255,0.6); }
+
 @media (min-width: 600px) {
   .topbar__name { font-size: 15px; }
   .topbar__site { font-size: 14px; }
