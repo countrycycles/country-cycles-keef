@@ -267,15 +267,31 @@ function renderResult(r) {
   if (r.ctaExtra) { extra.textContent = r.ctaExtra; extra.hidden = false; }
   else            { extra.textContent = '';          extra.hidden = true; }
 
+  // CTA placement depends on tier:
+  //   AMBER / RED → CTA inside the callout (it's the primary action)
+  //   GREEN       → CTA AFTER the needs section, framed as
+  //                 "If it still doesn't work…"
   const cta = $('ctaBtn');
   const ctaLabel = $('ctaBtnLabel');
-  if (r.ctaId === 'NONE' || !r.ctaLabel) {
-    cta.hidden = true;
-  } else {
-    cta.hidden = false;
-    cta.classList.toggle('answer-card--urgent', !!r.ctaUrgent);
-    ctaLabel.textContent = r.ctaLabel;
-    cta.onclick = () => handleCta(r.ctaId);
+  const fallback = $('fallbackCta');
+  const fallbackBtn = $('fallbackCtaBtn');
+  const fallbackLabel = $('fallbackCtaBtnLabel');
+
+  cta.hidden = true;
+  fallback.hidden = true;
+
+  if (r.ctaId !== 'NONE' && r.ctaLabel) {
+    if (r.tier === 'GREEN') {
+      fallback.hidden = false;
+      fallbackBtn.classList.toggle('answer-card--urgent', !!r.ctaUrgent);
+      fallbackLabel.textContent = r.ctaLabel;
+      fallbackBtn.onclick = () => handleCta(r.ctaId);
+    } else {
+      cta.hidden = false;
+      cta.classList.toggle('answer-card--urgent', !!r.ctaUrgent);
+      ctaLabel.textContent = r.ctaLabel;
+      cta.onclick = () => handleCta(r.ctaId);
+    }
   }
 
   $('shortCaveat').textContent = shortCaveat();
@@ -309,30 +325,46 @@ function renderNeeds(r) {
   for (const item of items) {
     const li = document.createElement('li');
     const url = productUrl(item);
+    const row = url ? document.createElement('a') : document.createElement('span');
     if (url) {
-      const a = document.createElement('a');
-      a.href = url;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.textContent = item.label;
-      a.appendChild(externalArrowSvg());
-      li.appendChild(a);
-    } else {
-      const span = document.createElement('span');
-      span.textContent = item.label;
-      li.appendChild(span);
+      row.href = url;
+      row.target = '_blank';
+      row.rel = 'noopener';
     }
+
+    // Thumbnail: product image if we have one, otherwise a quiet generic
+    // placeholder icon so visual rhythm holds across all rows.
+    const thumb = document.createElement('span');
+    thumb.className = 'needs__thumb';
+    thumb.setAttribute('aria-hidden', 'true');
+    if (item.image) {
+      const img = document.createElement('img');
+      img.src = item.image;
+      img.alt = '';
+      img.loading = 'lazy';
+      thumb.appendChild(img);
+    } else {
+      thumb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>';
+    }
+    row.appendChild(thumb);
+
+    const label = document.createElement('span');
+    label.className = 'needs__label';
+    label.textContent = item.label;
+    row.appendChild(label);
+
+    if (url) {
+      const arrow = document.createElement('span');
+      arrow.className = 'needs__arrow';
+      arrow.setAttribute('aria-hidden', 'true');
+      arrow.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>';
+      row.appendChild(arrow);
+    }
+
+    li.appendChild(row);
     list.appendChild(li);
   }
   section.hidden = false;
-}
-
-function externalArrowSvg() {
-  const span = document.createElement('span');
-  span.setAttribute('aria-hidden', 'true');
-  span.style.display = 'inline-flex';
-  span.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>';
-  return span;
 }
 
 // Build a product URL for a needs-item.

@@ -135,6 +135,18 @@
         </a>
       </section>
 
+      <!-- GREEN fallback CTA — appears AFTER the needs list:
+           "If it still doesn't work, book a workshop slot" -->
+      <section class="fallback-cta" id="fallbackCta" hidden>
+        <p class="fallback-cta__line">If it still doesn't work…</p>
+        <button type="button" class="answer-card answer-card--cta" id="fallbackCtaBtn">
+          <span class="answer-card__label" id="fallbackCtaBtnLabel">Book a workshop slot</span>
+          <span class="answer-card__arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </span>
+        </button>
+      </section>
+
       <!-- Contact panel — primary call + secondary pills -->
       <div class="contacts" id="resultContacts" aria-label="Contact Country Cycles">
         <a class="contact-pill contact-pill--secondary" id="resultInstaBtn" href="" target="_blank" rel="noopener" hidden>

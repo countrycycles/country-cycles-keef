@@ -71,9 +71,13 @@ export const RESULT_TEMPLATES = {
     actionLine: 'If it persists after a clean and lube, book a slot.',
     ctaId: 'BOOK_WORKSHOP',
     needs: [
-      { label: 'Chain lube',     url: 'https://www.country-cycles.com/peatys-linklube-all-weather-120ml-box-12-single.html' },
-      { label: 'Degreaser',      url: 'https://www.country-cycles.com/peatys-1000-ml-foaming-drivetrain-degreaser-box-12.html' },
-      { label: 'A clean rag',    search: 'cleaning' },
+      { label: 'Chain lube',
+        url:   'https://www.country-cycles.com/peatys-linklube-all-weather-120ml-box-12-single.html',
+        image: 'https://cdn.webshopapp.com/shops/332284/files/458417385/200x200x2/peatys-peatys-linklube-all-weather-120ml-box-12-si.jpg' },
+      { label: 'Degreaser',
+        url:   'https://www.country-cycles.com/peatys-1000-ml-foaming-drivetrain-degreaser-box-12.html',
+        image: 'https://cdn.webshopapp.com/shops/332284/files/458420237/200x200x2/peatys-peatys-foaming-drivetrain-degreaser-1l.jpg' },
+      { label: 'A clean rag', search: 'cleaning' },
     ],
   },
   GREEN_TYRES_PUNCTURE_TUBED: {
@@ -85,7 +89,9 @@ export const RESULT_TEMPLATES = {
     needs: [
       { label: 'Replacement inner tube', search: 'inner tube' },
       { label: 'Tyre levers',            search: 'tyre lever' },
-      { label: 'Mini pump',              url: 'https://www.country-cycles.com/pump-truflo-electron-compact-electric.html' },
+      { label: 'Mini pump',
+        url:   'https://www.country-cycles.com/pump-truflo-electron-compact-electric.html',
+        image: 'https://cdn.webshopapp.com/shops/332284/files/490304345/200x200x2/pump-truflo-electron-compact-electric.jpg' },
     ],
   },
   GREEN_TYRES_TUBELESS_TOPUP: {
@@ -95,8 +101,12 @@ export const RESULT_TEMPLATES = {
     actionLine: "If it won't hold air after a top-up, book a slot.",
     ctaId: 'BOOK_WORKSHOP',
     needs: [
-      { label: 'Tubeless sealant',     url: 'https://www.country-cycles.com/peatys-120-ml-tubeless-sealant-trail-pouch-12-unit.html' },
-      { label: 'Plug pack (for cuts)', url: 'https://www.country-cycles.com/dynaplug-plug-pack-3-x-soft-nose-and-2-x-mega-plug.html' },
+      { label: 'Tubeless sealant',
+        url:   'https://www.country-cycles.com/peatys-120-ml-tubeless-sealant-trail-pouch-12-unit.html',
+        image: 'https://cdn.webshopapp.com/shops/332284/files/458417881/200x200x2/peatys-peatys-120-ml-tubeless-sealant-trail-pouch.jpg' },
+      { label: 'Plug pack (for cuts)',
+        url:   'https://www.country-cycles.com/dynaplug-plug-pack-3-x-soft-nose-and-2-x-mega-plug.html',
+        image: 'https://cdn.webshopapp.com/shops/332284/files/490305457/200x200x2/dynaplug-dynaplug-plug-pack-3-x-soft-nose-and-2-x.jpg' },
       { label: 'Valve core remover',   search: 'valve core' },
     ],
   },
