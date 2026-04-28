@@ -77,7 +77,9 @@ export const RESULT_TEMPLATES = {
       { label: 'Degreaser',
         url:   'https://www.country-cycles.com/peatys-1000-ml-foaming-drivetrain-degreaser-box-12.html',
         image: 'https://cdn.webshopapp.com/shops/332284/files/458420237/200x200x2/peatys-peatys-foaming-drivetrain-degreaser-1l.jpg' },
-      { label: 'A clean rag', search: 'cleaning' },
+      { label: 'A clean rag',
+        url:   'https://www.country-cycles.com/maintenance/cleaning/',
+        image: 'https://cdn.webshopapp.com/shops/332284/files/458421447/200x200x2/cleaning.jpg' },
     ],
   },
   GREEN_TYRES_PUNCTURE_TUBED: {
@@ -87,8 +89,12 @@ export const RESULT_TEMPLATES = {
     actionLine: "If you're getting repeated punctures in the same spot, that's a workshop job.",
     ctaId: 'NONE',
     needs: [
-      { label: 'Replacement inner tube', search: 'inner tube' },
-      { label: 'Tyre levers',            search: 'tyre lever' },
+      { label: 'Replacement inner tube',
+        url:   'https://www.country-cycles.com/maintenance/inner-tubes/',
+        image: 'https://cdn.webshopapp.com/shops/332284/files/457680703/200x200x2/inner-tubes.jpg' },
+      { label: 'Tyre levers',
+        url:   'https://www.country-cycles.com/maintenance/puncture-repair/',
+        image: 'https://cdn.webshopapp.com/shops/332284/files/419516776/200x200x2/puncture-repair.jpg' },
       { label: 'Mini pump',
         url:   'https://www.country-cycles.com/pump-truflo-electron-compact-electric.html',
         image: 'https://cdn.webshopapp.com/shops/332284/files/490304345/200x200x2/pump-truflo-electron-compact-electric.jpg' },
@@ -107,7 +113,9 @@ export const RESULT_TEMPLATES = {
       { label: 'Plug pack (for cuts)',
         url:   'https://www.country-cycles.com/dynaplug-plug-pack-3-x-soft-nose-and-2-x-mega-plug.html',
         image: 'https://cdn.webshopapp.com/shops/332284/files/490305457/200x200x2/dynaplug-dynaplug-plug-pack-3-x-soft-nose-and-2-x.jpg' },
-      { label: 'Valve core remover',   search: 'valve core' },
+      { label: 'Dynaplug Racer Pro repair kit',
+        url:   'https://www.country-cycles.com/dynaplug-racer-pro-tubeless-bicycle-tyre-repair-ki.html',
+        image: 'https://cdn.webshopapp.com/shops/332284/files/490306128/200x200x2/dynaplug-dynaplug-racer-pro-tubeless-bicycle-tyre.jpg' },
     ],
   },
   GREEN_SUSPENSION_SAG: {
@@ -117,7 +125,7 @@ export const RESULT_TEMPLATES = {
     actionLine: 'No shock pump? Pop in, we keep one on the counter.',
     ctaId: 'BOOK_WORKSHOP',
     needs: [
-      { label: 'Shock pump', search: 'shock pump' },
+      { label: 'Shock pump (we lend ours)', noLink: true },
     ],
   },
   GREEN_EBIKE_LEGAL_LIMIT_NORMAL: {

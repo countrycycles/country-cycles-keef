@@ -373,6 +373,7 @@ function renderNeeds(r) {
 //   3) default search URL  — /search/<term-with-plus>/ pattern, matching
 //                            country-cycles.com's actual search route
 function productUrl(item) {
+  if (item.noLink) return null;
   if (item.url) return item.url;
   const builder = window.COUNTRY_CYCLES_PRODUCT_URL_BUILDER;
   if (typeof builder === 'function') return builder(item);
